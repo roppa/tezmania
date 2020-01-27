@@ -1,0 +1,25 @@
+{
+  "name": "tezmania",
+  "version": "0.0.0",
+  "description": "a Tezos blockchain client",
+  "main": "index.js",
+  "dependencies": {
+    "bip39": "3.0.2",
+    "bs58": "4.0.1",
+    "libsodium-wrappers-sumo": "0.7.6"
+  },
+  "devDependencies": {
+    "jest": "25.1.0",
+    "ts-jest": "25.0.0",
+    "typescript": "3.7.5"
+  },
+  "scripts": {
+    "test": "jest --coverage",
+    "dev": "jest --coverage --watchAll"
+  },
+  "keywords": [
+    "tezos"
+  ],
+  "author": "Mark Robson mark.o.robson@gmail.com",
+  "license": "MIT"
+}
