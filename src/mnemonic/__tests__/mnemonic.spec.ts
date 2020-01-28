@@ -13,8 +13,4 @@ describe('Mnemonic library', () => {
       expect(validateMnemonic('invalid')).toBe(false)
     })
   })
-
-  // describe('getKeysFromMnemonicAndPassphrase', () => {
-  //   test('should return a keystore')
-  // })
 })

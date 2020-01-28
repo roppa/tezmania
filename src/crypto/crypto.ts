@@ -13,9 +13,9 @@ const isValidMnemonic = (mnemonic: string): boolean | Error => {
 const getSeed = async (mnemonic: string, passPhrase: string): Promise<Buffer> =>
   (await mnemonicToSeed(mnemonic, passPhrase)).slice(0, 32)
 
-const getKeyStore = async (seed: string | Buffer) => {
+const getKeyStore = async (seed: Buffer): Promise<RawKeyStore> => {
   await sodiumsumo.ready
-  return sodiumsumo.crypto_sign_seed_keypair(seed, '')
+  return sodiumsumo.crypto_sign_seed_keypair(seed)
 }
 
 const rawToHex = (raw: Buffer | Uint8Array) =>
