@@ -12,6 +12,14 @@ init('http://localhost:8732')
 
 This library uses [libsodium-wrappers-sumo](https://www.npmjs.com/package/libsodium-wrappers-sumo).
 
+### readPublicKey
+
+### publicKeyFromBuffer
+
+### privateKeyFromBuffer
+
+### getKeysFromMnemonicAndPassphrase
+
 ## Mnemonics
 
 This library uses [bip39](https://github.com/bitcoinjs/bip39).
