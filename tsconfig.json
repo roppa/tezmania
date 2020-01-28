@@ -9,8 +9,11 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./types"
+    ]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "types/**/*"],
   "exclude": ["node_modules", "**/*.test.ts", "**/__mocks__", "**/__stubs__"]
 }
