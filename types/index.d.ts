@@ -7,5 +7,7 @@ interface RawKeyStore {
 interface KeyStore {
   publicKey: string
   privateKey: string
+  pkh: string
   keyType: string
+  mnemonic: string
 }

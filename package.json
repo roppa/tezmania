@@ -6,8 +6,9 @@
   "dependencies": {
     "@types/bs58": "4.0.1",
     "@types/libsodium-wrappers-sumo": "0.7.3",
+    "axios": "0.19.2",
     "bip39": "3.0.2",
-    "bs58": "4.0.1",
+    "bs58check": "2.1.2",
     "libsodium-wrappers-sumo": "0.7.6"
   },
   "devDependencies": {
@@ -20,7 +21,8 @@
   },
   "scripts": {
     "test": "jest --coverage",
-    "dev": "jest --coverage --watchAll"
+    "dev": "jest --coverage --watchAll",
+    "build:web": "npx webpack"
   },
   "keywords": [
     "tezos"
