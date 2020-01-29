@@ -1,22 +1,44 @@
-const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin')
+const path = require('path')
+const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const {
+  CheckerPlugin
+} = require('awesome-typescript-loader')
 
-module.exports = {
-  entry: './src/index.ts',
+const webConfig = {
   mode: 'production',
-  devtool: 'inline-source-map',
-  module: {
-    rules: [{
-      test: /\.ts?$/,
-      use: 'ts-loader',
-      exclude: /node_modules/,
-    }, ],
+  entry: './src/index.ts',
+  target: 'web',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'tezmania.min.js',
+    library: 'tezmania',
+    libraryTarget: 'umd'
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.ts', '.tsx', '.js'],
+    plugins: [
+      new TsConfigPathsPlugin({
+        configFile: './tsconfig.json'
+      })
+    ]
   },
-  output: {
-    filename: 'tezmania.js',
-    libraryTarget: 'umd',
-    path: path.resolve(__dirname, 'dist'),
+  module: {
+    rules: [{
+      test: /\.tsx?$/,
+      loader: 'awesome-typescript-loader'
+    }]
   },
-};
+  node: {
+    child_process: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  },
+  plugins: [new CheckerPlugin()],
+  optimization: {
+    minimizer: [new TerserPlugin()]
+  }
+}
+
+module.exports = [webConfig]

@@ -4,6 +4,7 @@
     "module": "commonjs",
     "lib": ["dom", "es2017"],
     "sourceMap": true,
+    "baseUrl": "src",
     "outDir": "./lib",
     "strict": true,
     "noImplicitAny": true,
