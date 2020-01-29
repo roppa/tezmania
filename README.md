@@ -1,6 +1,6 @@
 # Tezmania - a Tezos client
 
-Tezmania is a client for Tezos allowing you to query the blockchain, interact with smart contracts and more. If you are learning about Tezos I'm working on [some resources in the 'learning' folder](/learning).
+Tezmania is a client for Tezos allowing you to query the blockchain, interact with smart contracts and more. This is mainly a tool for learning, so if you are learning about Tezos I'm working on [some resources in the 'learning' folder](/learning).
 
 ## init (network functions)
 
@@ -52,3 +52,11 @@ This is a direct export from [bip39.generateMnemonic](https://github.com/bitcoin
 ### validateMnemonic(string): boolean
 
 This function validates a mnemomic string, returning boolean value.
+
+## Credits
+
+Sources of reference (and pure theft) are these cool projects:
+
+- [Sotez](https://github.com/AndrewKishino/sotez)
+- [eztz](https://github.com/TezTech/eztz)
+- [ConseilJS](https://github.com/Cryptonomic/ConseilJS)
