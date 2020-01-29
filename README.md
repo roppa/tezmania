@@ -1,28 +1,22 @@
 # Tezmania - a Tezos client
 
-Tezmania is a client for Tezos allowing you to query the blockchain, interact with smart contracts and more.
+Tezmania is a client for Tezos allowing you to query the blockchain, interact with smart contracts and more. If you are learning about Tezos I'm working on [some resources in the 'learning' folder](/learning).
 
 ## init (network functions)
 
 Configure (curry) the host network:
 
 ```js
-init('http://localhost:8732')
+const net = tezmania.init('http://localhost:8732')
+net.getHead().then(head => console.log(head))
 ```
 
-This returns the curried functions belonging to the network file (`/src/network`).
+This returns the curried functions belonging to the network file (`/src/network`). This applies to any of the functions in the network section.
 
 In exported format, the functions below are curried i.e.:
 
 ```js
-getHead('http://localhost:8732')()
-```
-
-To use any of the below you can do something like:
-
-```js
-const net = tezmania.init('http://localhost:8732')
-net.getHead().then(head => console.log(head))
+tezmania.getHead('http://localhost:8732')()
 ```
 
 ### getBalance(account: string)
