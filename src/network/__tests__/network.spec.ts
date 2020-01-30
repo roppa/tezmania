@@ -2,7 +2,16 @@ import axios from 'axios'
 
 import { init } from '../network'
 
-const { getBalance, getDelegate, getDelegates, getHead, getHeadHash } = init(
+const {
+  getBalance,
+  getDelegate,
+  getDelegates,
+  getHead,
+  getHeader,
+  getHeadHash,
+  getManager,
+  getCounter,
+  getBaker } = init(
   'http://127.0.0.1:8732'
 )
 
@@ -46,6 +55,15 @@ describe('network', () => {
     })
   })
 
+  describe('getBaker', () => {
+    test('should return valid baker', async () => {
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'baker'
+      }))
+      expect(await getBaker('tz1address')).toEqual('baker')
+    })
+  })
+
   describe('getHead', () => {
     test('should return current head', async () => {
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
@@ -71,7 +89,34 @@ describe('network', () => {
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
         data: 'hash'
       }))
-      expect(typeof await getHeadHash()).toBe('string')
+      expect(await getHeadHash()).toBe('hash')
+    })
+  })
+
+  describe('getHeader', () => {
+    test('should return header', async () => {
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'header'
+      }))
+      expect(await getHeader()).toBe('header')
+    })
+  })
+
+  describe('getManager', () => {
+    test('should return ...', async () => {
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'manager'
+      }))
+      expect(await getManager('address')).toBe('manager')
+    })
+  })
+
+  describe('getCounter', () => {
+    test('should return ...', async () => {
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'counter'
+      }))
+      expect(await getCounter('address')).toBe('counter')
     })
   })
 })
