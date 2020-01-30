@@ -51,6 +51,6 @@ export const generateKeysFromMnemonicAndPassphrase = async (
 }
 
 export const bufferToHex = (buffer: Buffer): string =>
-  buffer.map((byte: string) => byte.toString(16).padStart(2, '0')).join('')
+  buffer.map((byte: any) => byte.toString(16).padStart(2, '0')).join('')
 
 export const generateKeys = () => {}
