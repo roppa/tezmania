@@ -50,9 +50,4 @@ describe('Crypto library', () => {
 
   })
 
-  describe('generateKeys', () => {
-    test('should ...', () => {
-      expect(typeof generateKeys).toEqual('function')
-    })
-  })
 })

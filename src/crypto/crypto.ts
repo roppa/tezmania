@@ -56,5 +56,3 @@ export const bufferToHex = (buffer: Buffer): string => {
     .call(bytes, byte => byte.toString(16).padStart(2, '0'))
     .join('')
 }
-
-export const generateKeys = () => {}
