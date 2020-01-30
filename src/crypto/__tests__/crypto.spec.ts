@@ -38,14 +38,14 @@ describe('Crypto library', () => {
 
   describe('bufferToHex', () => {
     test('should convert buffer to hex string', () => {
-      expect(bufferToHex([1, 2])).toEqual('0102')
+      expect(bufferToHex(Buffer.from([1, 2]))).toEqual('0102')
     })
   test('should convert buffer to hex chars', () => {
-      expect(bufferToHex([15, 14, 13, 12])).toEqual('0f0e0d0c')
+      expect(bufferToHex(Buffer.from([15, 14, 13, 12]))).toEqual('0f0e0d0c')
     })
 
   test('should handle leading zeros', () => {
-      expect(bufferToHex([0, 14, 13, 12])).toEqual('000e0d0c')
+      expect(bufferToHex(Buffer.from([0, 14, 13, 12]))).toEqual('000e0d0c')
     })
 
   })
