@@ -19,11 +19,13 @@ In exported format, the functions below are curried i.e.:
 tezmania.getHead('http://localhost:8732')()
 ```
 
-### getBalance(account: string)
+### getBalance(account: string): string
 
-### getDelegates
+Returns balance for account.
 
-### getDelegate
+### getDelegate(contractAddress: string): string
+
+### getDelegates(): string
 
 ### getHead
 

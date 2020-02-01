@@ -11,3 +11,14 @@ interface KeyStore {
   keyType: string
   mnemonic: string
 }
+
+interface SignObject {
+  message: string
+  privateKey: string
+}
+
+interface VerifyObject {
+  signature: string
+  message: string
+  publicKey: string
+}

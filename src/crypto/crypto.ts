@@ -18,7 +18,7 @@ const getKeyStore = async (seed: Buffer): Promise<RawKeyStore> => {
   return sodiumsumo.crypto_sign_seed_keypair(seed)
 }
 
-const b58cencode = (prefix: Uint8Array, payload: Uint8Array): string => {
+const b58encode = (prefix: Uint8Array, payload: Uint8Array): string => {
   const n = new Uint8Array(prefix.length + payload.length)
   n.set(prefix)
   n.set(payload, prefix.length)
@@ -26,10 +26,15 @@ const b58cencode = (prefix: Uint8Array, payload: Uint8Array): string => {
   return bs58check.encode(Buffer.from(n, 'hex'))
 }
 
+const b58decode = (prefixArg: Uint8Array, message: string): Uint8Array =>
+  bs58check.decode(message).slice(prefixArg.length)
+
 const prefix = {
   tz1: new Uint8Array([6, 161, 159]),
   edpk: new Uint8Array([13, 15, 37, 217]),
-  edsk: new Uint8Array([43, 246, 78, 7])
+  edsk: new Uint8Array([43, 246, 78, 7]),
+  edsig: new Uint8Array([9, 245, 205, 134, 18]),
+  sig: new Uint8Array([4, 130, 43])
 }
 
 export const generateKeysFromMnemonicAndPassphrase = async (
@@ -42,9 +47,9 @@ export const generateKeysFromMnemonicAndPassphrase = async (
   )
 
   return {
-    publicKey: b58cencode(prefix.edpk, publicKey),
-    privateKey: b58cencode(prefix.edsk, privateKey),
-    pkh: b58cencode(prefix.tz1, sodiumsumo.crypto_generichash(20, publicKey)),
+    publicKey: b58encode(prefix.edpk, publicKey),
+    privateKey: b58encode(prefix.edsk, privateKey),
+    pkh: b58encode(prefix.tz1, sodiumsumo.crypto_generichash(20, publicKey)),
     keyType,
     mnemonic
   }
@@ -53,6 +58,27 @@ export const generateKeysFromMnemonicAndPassphrase = async (
 export const bufferToHex = (buffer: Buffer): string => {
   const bytes = new Uint8Array(buffer)
   return Array.prototype.map
-    .call(bytes, byte => byte.toString(16).padStart(2, '0'))
+    .call(bytes, (byte: any) => byte.toString(16).padStart(2, '0'))
     .join('')
 }
+
+export const sign = ({ message, privateKey }: SignObject): string =>
+  b58encode(
+    prefix.sig,
+    sodiumsumo.crypto_sign_detached(
+      Buffer.from(message, 'utf8'),
+      b58decode(prefix.edsk, privateKey),
+      'uint8array'
+    )
+  )
+
+export const verify = ({
+  signature,
+  message,
+  publicKey
+}: VerifyObject): boolean =>
+  sodiumsumo.crypto_sign_verify_detached(
+    b58decode(prefix.sig, signature),
+    message,
+    b58decode(prefix.edpk, publicKey)
+  )

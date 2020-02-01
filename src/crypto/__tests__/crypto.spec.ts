@@ -1,20 +1,24 @@
 import {
   generateKeysFromMnemonicAndPassphrase,
-  generateKeys,
-  bufferToHex
+  // generateKeys,
+  bufferToHex,
+  sign,
+  verify
 } from '../crypto'
 import { generateMnemonic } from '../../mnemonic/mnemonic'
 
+const stubKeystore = {
+  mnemonic: 'utility orbit end win roast sail warrior toast cross banana news gossip swap theme piece'
+  publicKey: 'edpkvFMQpH8CBZeXxyrYBFc3LH8zc3dC6qhzRzuiZXvGd8oxiQrXQo'
+  privateKey: 'edskS3EdqCCLLsxNhLXoVVBtFzqJEXkNcJeNriPDSdn22yJgET8grjzcRrQ2bnJ9zYTdfZTUfSsMdC76FGNZE5wsLDuXfc4fJ8',
+  pkh: 'tz1X7JKJ114Btq3Mbz62NJxJSrmWPo4guFVq'
+  keyType: 'ed25519'
+}
+
+const messageSignature = 'sigg9YBuaGsJgZTzCM9mKv5hWLdte6qLfm8BuYih5VwBnN8MwLvJKDqMFJ1fhnWuz94GZot2YMJMuF8yE3gFjdckZqhTovvV'
+
 describe('Crypto library', () => {
   describe('generateKeysFromMnemonicAndPassphrase', () => {
-    const stubKeystore = {
-      mnemonic: 'utility orbit end win roast sail warrior toast cross banana news gossip swap theme piece'
-      publicKey: 'edpkvFMQpH8CBZeXxyrYBFc3LH8zc3dC6qhzRzuiZXvGd8oxiQrXQo'
-      privateKey: 'edskS3EdqCCLLsxNhLXoVVBtFzqJEXkNcJeNriPDSdn22yJgET8grjzcRrQ2bnJ9zYTdfZTUfSsMdC76FGNZE5wsLDuXfc4fJ8',
-      pkh: 'tz1X7JKJ114Btq3Mbz62NJxJSrmWPo4guFVq'
-      keyType: 'ed25519'
-    }
-
     test('should reject when no mnemonic', async () => {
       await generateKeysFromMnemonicAndPassphrase().catch((error: Error) => {
         expect(error.message).toEqual('invalid mnemonic string')
@@ -49,5 +53,24 @@ describe('Crypto library', () => {
     })
 
   })
+
+  describe('sign', () => {    
+  test('should sign return object with required attributes', () => {
+      expect(sign({ message: 'message', privateKey: stubKeystore.privateKey })).toEqual(messageSignature)
+    })
+  })
+
+  describe('verify', () => {
+    test('should return false for invalid signature', () => {
+      expect(verify({ signature: messageSignature, message: 'wrongmessage', publicKey: stubKeystore.publicKey })).toEqual(false)
+    })
+    test('should return false for invalid signature', () => {
+      expect(verify({ signature: messageSignature, message: 'message', publicKey: stubKeystore.publicKey })).toEqual(true)
+    })
+  })
+
+  // describe('verify', () => {
+  //   test('should sign ...', () => {})
+  // })
 
 })
