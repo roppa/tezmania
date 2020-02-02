@@ -19,11 +19,10 @@ const getKeyStore = async (seed: Buffer): Promise<RawKeyStore> => {
 }
 
 const b58encode = (prefix: Uint8Array, payload: Uint8Array): string => {
-  const n = new Uint8Array(prefix.length + payload.length)
-  n.set(prefix)
-  n.set(payload, prefix.length)
-  // @ts-ignore
-  return bs58check.encode(Buffer.from(n, 'hex'))
+  const bytes = new Uint8Array(prefix.length + payload.length)
+  bytes.set(prefix)
+  bytes.set(payload, prefix.length)
+  return bs58check.encode(Buffer.from(bytes as any, 'hex'))
 }
 
 const b58decode = (prefixArg: Uint8Array, message: string): Uint8Array =>

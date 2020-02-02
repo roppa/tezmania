@@ -68,9 +68,4 @@ describe('Crypto library', () => {
       expect(verify({ signature: messageSignature, message: 'message', publicKey: stubKeystore.publicKey })).toEqual(true)
     })
   })
-
-  // describe('verify', () => {
-  //   test('should sign ...', () => {})
-  // })
-
 })
