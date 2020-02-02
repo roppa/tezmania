@@ -1,6 +1,5 @@
 import {
   generateKeysFromMnemonicAndPassphrase,
-  // generateKeys,
   bufferToHex,
   sign,
   verify

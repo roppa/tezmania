@@ -54,12 +54,12 @@ export const generateKeysFromMnemonicAndPassphrase = async (
   }
 }
 
-export const bufferToHex = (buffer: Buffer): string => {
-  const bytes = new Uint8Array(buffer)
-  return Array.prototype.map
-    .call(bytes, (byte: any) => byte.toString(16).padStart(2, '0'))
+export const bufferToHex = (buffer: Buffer): string =>
+  Array.prototype.map
+    .call(new Uint8Array(buffer), (byte: any) =>
+      byte.toString(16).padStart(2, '0')
+    )
     .join('')
-}
 
 export const sign = ({ message, privateKey }: SignObject): string =>
   b58encode(
