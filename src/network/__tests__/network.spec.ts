@@ -195,4 +195,33 @@ describe('network', () => {
     })
   })
 
+  describe('storage', () => {
+    test('should return storage information for contract address', async () => {
+        const data = {
+          bignum: '0',
+          unistring: ''
+        }
+        ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+          data
+        }))
+        expect(await net.getContractStorage('contractAddress')).toEqual(data)
+    })
+  })
+
+  describe('contract', () => {
+    test('should return contract information for contract address', async () => {
+        const data = {
+          balance: '0',
+          delegate: 'xxx',
+          script: 'xxx',
+          counter: '0',
+          signature: 'xx',
+        }
+        ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+          data
+        }))
+        expect(await net.getContract('contractAddress')).toEqual(data)
+    })
+  })
+
 })

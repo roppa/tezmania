@@ -73,6 +73,15 @@ export const getCurrentQuorum = (server: string) => (): Promise<
   number | Error
 > => doGet(`${server}/${votesPath}/current_quorum`)
 
+export const getContract = (server: string) => (
+  contractAddress: string
+): Promise<Contract | Error> => doGet(`${server}/${contractAddress}`)
+
+export const getContractStorage = (server: string) => (
+  contractAddress: string
+): Promise<ContractStorage | Error> =>
+  doGet(`${server}/${contractAddress}/storage`)
+
 export const init = (server: string) => ({
   getBalance: getBalance(server),
   getDelegate: getDelegate(server),
@@ -89,5 +98,7 @@ export const init = (server: string) => ({
   getListings: getListings(server),
   getCurrentProposal: getCurrentProposal(server),
   getCurrentPeriod: getCurrentPeriod(server),
-  getCurrentQuorum: getCurrentQuorum(server)
+  getCurrentQuorum: getCurrentQuorum(server),
+  getContract: getContract(server),
+  getContractStorage: getContractStorage(server)
 })

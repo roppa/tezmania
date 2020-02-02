@@ -54,6 +54,8 @@ export const generateKeysFromMnemonicAndPassphrase = async (
   }
 }
 
+export const extractKeysFromPrivateKey = () => {}
+
 export const bufferToHex = (buffer: Buffer): string =>
   Array.prototype.map
     .call(new Uint8Array(buffer), (byte: any) =>

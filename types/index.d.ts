@@ -22,3 +22,16 @@ interface VerifyObject {
   message: string
   publicKey: string
 }
+
+interface ContractStorage {
+  bignum: string
+  unistring: string
+}
+
+interface Contract {
+  balance: string
+  delegate: string
+  script: string
+  counter: string
+  signature: string
+}

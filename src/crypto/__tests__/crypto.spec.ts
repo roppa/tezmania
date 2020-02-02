@@ -1,5 +1,6 @@
 import {
   generateKeysFromMnemonicAndPassphrase,
+  extractKeysFromPrivateKey,
   bufferToHex,
   sign,
   verify
@@ -36,6 +37,12 @@ describe('Crypto library', () => {
         'password'
       )
       expect(keystore).toEqual(stubKeystore)
+    })
+  })
+
+  describe('extractKeysFromPrivateKey', () => {
+    test('should ..', () => {
+      expect(extractKeysFromPrivateKey()).toEqual(undefined)
     })
   })
 
