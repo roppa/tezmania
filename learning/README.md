@@ -15,10 +15,10 @@ opam - OCaml Package Manager
 
 To get Tezos I found the only way was to use Docker. The installation was riddled with bugs, probably due to an OSX update. Anyway, follow [the 'how to get' instructions](https://tezos.gitlab.io/introduction/howtoget.html).
 
-Once you have downloaded and converted the .sh files to executable, start all processes with (and make sure port 8732 is exposed):
+Once you have downloaded and converted the .sh files to executable, start all processes with (and make sure port 8732 is exposed and cors are set in order to run examples in docker):
 
 ```
-./babylonnet.sh start --rpc-port 8732
+./babylonnet.sh start --rpc-port 8732 --cors-origin=http://localhost:8000 --cors-origin=node:8732 --cors-origin=localhost:8732
 ```
 
 Add `--help` for more informations about the script.
