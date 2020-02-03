@@ -11,6 +11,7 @@ describe('Mnemonic library', () => {
     test('should return true for valid mnemonic', () => {
       expect(validateMnemonic(generateMnemonic())).toBe(true)
       expect(validateMnemonic('invalid')).toBe(false)
+      expect(validateMnemonic()).toBe(false)
     })
   })
 })

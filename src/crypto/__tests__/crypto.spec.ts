@@ -20,22 +20,22 @@ const messageSignature = 'sigg9YBuaGsJgZTzCM9mKv5hWLdte6qLfm8BuYih5VwBnN8MwLvJKD
 describe('Crypto library', () => {
   describe('generateKeysFromMnemonicAndPassphrase', () => {
     test('should reject when no mnemonic', async () => {
-      await generateKeysFromMnemonicAndPassphrase().catch((error: Error) => {
+      await generateKeysFromMnemonicAndPassphrase({ mnemonic: '', passphrase: ''}).catch((error: Error) => {
         expect(error.message).toEqual('invalid mnemonic string')
       })
     })
     test('should reject when no passphrase', async () => {
-      await generateKeysFromMnemonicAndPassphrase(generateMnemonic()).catch(
+      await generateKeysFromMnemonicAndPassphrase({ mnemonic: generateMnemonic() }).catch(
         (error: Error) => {
           expect(error).toBeDefined()
         }
       )
     })
     test('should return object with keyStore values', async () => {
-      const keystore = await generateKeysFromMnemonicAndPassphrase(
-        stubKeystore.mnemonic,
-        'password'
-      )
+      const keystore = await generateKeysFromMnemonicAndPassphrase({
+        mnemonic: stubKeystore.mnemonic,
+        passphrase: 'password'
+      })
       expect(keystore).toEqual(stubKeystore)
     })
   })

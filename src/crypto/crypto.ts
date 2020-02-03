@@ -36,13 +36,13 @@ const prefix = {
   sig: new Uint8Array([4, 130, 43])
 }
 
-export const generateKeysFromMnemonicAndPassphrase = async (
-  mnemonic: string,
-  passPhrase: string
-): Promise<KeyStore> => {
+export const generateKeysFromMnemonicAndPassphrase = async ({
+  mnemonic,
+  passphrase
+}: MnemonicPassword): Promise<KeyStore> => {
   isValidMnemonic(mnemonic)
   const { publicKey, privateKey, keyType } = await getKeyStore(
-    await getSeed(mnemonic, passPhrase)
+    await getSeed(mnemonic, passphrase)
   )
 
   return {

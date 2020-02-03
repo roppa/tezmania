@@ -58,6 +58,12 @@ or
 
 - [Tezoscapstone](https://tezoscapstone.com)
 
+## Tools
+
+- [Bi39](https://github.com/bitcoinjs/bip39)
+- [bs58check](https://github.com/bitcoinjs/bs58check)
+- [Libsodium](https://github.com/jedisct1/libsodium.js)
+
 ## References
 
 - [Compile mainnet](https://github.com/tezoscommunity/FAQ/blob/master/Compile_Mainnet.md)

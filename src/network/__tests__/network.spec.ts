@@ -21,6 +21,49 @@ describe('network', () => {
     })
   })
 
+  describe('getConstants', () => {
+
+    const constantsExample = {
+      proof_of_work_nonce_size: 8,
+      nonce_length: 32,
+      max_revelations_per_block: 32,
+      max_operation_data_length: 16384,
+      max_proposals_per_delegate: 20,
+      preserved_cycles: 3,
+      blocks_per_cycle: 2048,
+      blocks_per_commitment: 32,
+      blocks_per_roll_snapshot: 256,
+      blocks_per_voting_period: 8192,
+      time_between_blocks: ['30', '40'],
+      endorsers_per_block: 32,
+      hard_gas_limit_per_operation: '800000',
+      hard_gas_limit_per_block: '8000000',
+      proof_of_work_threshold: '70368744177663',
+      tokens_per_roll: '8000000000',
+      michelson_maximum_type_size: 1000,
+      seed_nonce_revelation_tip: '125000',
+      origination_size: 257,
+      block_security_deposit: '512000000',
+      endorsement_security_deposit: '64000000',
+      block_reward: '16000000',
+      endorsement_reward: '2000000',
+      cost_per_byte: '1000',
+      hard_storage_limit_per_operation: '60000',
+      test_chain_duration: '86400',
+      quorum_min: 3000,
+      quorum_max: 7000,
+      min_proposal_quorum: 500,
+      initial_endorsers: 24,
+      delay_per_missing_endorsement: '2'
+    }
+  test('should return constants object', async () => {
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: constantsExample
+      }))
+      expect(await net.getConstants()).toEqual(constantsExample)
+    })
+  })
+
   describe('getDelegate', () => {
     test('should return valid delegate', async () => {
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
@@ -101,12 +144,16 @@ describe('network', () => {
     })
   })
 
-  describe('getManager', () => {
-    test('should return manager address', async () => {
+  describe('getManagerKey', () => {
+    test('should return manager key', async () => {
+      const managerKey = {
+        manager: 'address',
+        key: 'publicKey'
+      }
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
-        data: 'manager'
+        data: managerKey
       }))
-      expect(await net.getManager('address')).toBe('manager')
+      expect(await net.getManagerKey('address')).toEqual(managerKey)
     })
   })
 
@@ -221,6 +268,28 @@ describe('network', () => {
           data
         }))
         expect(await net.getContract('contractAddress')).toEqual(data)
+    })
+  })
+
+  describe('bootstrapped', () => {
+    test('bootstrapped', async () => {
+      const bootstrappedData = {
+        block: 'block',
+        timestamp: 'yyyy-mm-ddThh:mm:ssZ'
+      }
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+          data: bootstrappedData
+      }))
+      expect(await net.getBootstrapped()).toEqual(bootstrappedData)
+    })
+  })
+
+  describe('getChainId', () => {
+    test('getChainId', async () => {
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+          data: 'chainid'
+      }))
+      expect(await net.getChainId()).toEqual('chainid')
     })
   })
 

@@ -19,6 +19,10 @@ In exported format, the functions below are curried i.e.:
 tezmania.getHead('http://localhost:8732')()
 ```
 
+### getBootstrapped: object
+
+This checks whether the node is bootstrapped if it is well connected to the network i.e. has enough connections to other nodes and the chain is synchronized with them.
+
 ### getBalance(account: string): string
 
 Returns balance for account.
