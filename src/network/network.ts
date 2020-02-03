@@ -6,6 +6,7 @@ const chains = '/chains/main'
 const head = `${chains}/blocks/head`
 const header = `${head}/header`
 const monitorPath = `${head}/monitor`
+const operationPath = `${head}/helpers/scripts/run_operation`
 const constantsPath = `${head}/context/constants`
 const contractsPath = `${head}/context/contracts`
 const delegatesPath = `${head}/context/delegates`
@@ -13,6 +14,13 @@ const votesPath = `${head}/votes`
 
 export const get = (path: string): Promise<any | Error> =>
   axios.get(path).then(result => result.data)
+
+export const post = (path: string, payload: object): Promise<any | Error> =>
+  axios.post(path, payload).then(result => result.data)
+
+export const postSimulateOperation = (server: string) => (
+  payload: object
+): Promise<object | Error> => post(`${server}/${operationPath}`, payload)
 
 export const getChainId = (server: string) => (): Promise<string | Error> =>
   get(`${server}/${chains}/chain_id`)
@@ -118,5 +126,6 @@ export const init = (server: string) => ({
   getCurrentPeriod: getCurrentPeriod(server),
   getCurrentQuorum: getCurrentQuorum(server),
   getContract: getContract(server),
-  getContractStorage: getContractStorage(server)
+  getContractStorage: getContractStorage(server),
+  postSimulateOperation: postSimulateOperation(server)
 })

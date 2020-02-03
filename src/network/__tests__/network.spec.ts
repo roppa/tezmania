@@ -293,4 +293,32 @@ describe('network', () => {
     })
   })
 
+  describe('simulateOperation', () => {
+  test('should dry run a transaction', async () => {
+      const simulationResponse = {
+        contents: []
+      }
+      ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
+          data: simulationResponse
+      }))
+      expect(await net.postSimulateOperation({
+        branch: 'BLyypN89WuTQyLtExGP6PEuZiu5WFDxys3GTUf7Vz4KvgKcvo2E',
+        contents: [
+          {
+            kind: 'transaction',
+            source: 'tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx',
+            fee: '50000',
+            counter: '3',
+            gas_limit: '400000',
+            storage_limit: '60000',
+            amount: '100000000',
+            destination: 'tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN'
+          }
+        ],
+        signature:
+          'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q'
+      })).toEqual(simulationResponse)
+    })
+  })
+
 })

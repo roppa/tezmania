@@ -54,6 +54,10 @@ or
 ./alphanet.sh client man -v 3
 ```
 
+## Creating a transaction
+
+Following [this example of how to transfer from one account to another](http://www.ocamlpro.com/2018/11/15/an-introduction-to-tezos-rpcs-a-basic-wallet/) we can use tezmania to do the transfer.
+
 ## Learning resources
 
 - [Tezoscapstone](https://tezoscapstone.com)
