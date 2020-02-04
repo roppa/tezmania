@@ -2,10 +2,10 @@ import axios from 'axios'
 
 // Reference: https://tezos.gitlab.io/api/rpc.html#rpc-index
 
-const chains = '/chains/main'
+const chains = `/chains/main`
 const head = `${chains}/blocks/head`
 const header = `${head}/header`
-const monitorPath = `${head}/monitor`
+const monitorPath = `/monitor`
 const operationPath = `${head}/helpers/scripts/run_operation`
 const constantsPath = `${head}/context/constants`
 const contractsPath = `${head}/context/contracts`
@@ -20,7 +20,7 @@ export const post = (path: string, payload: object): Promise<any | Error> =>
 
 export const postSimulateOperation = (server: string) => (
   payload: object
-): Promise<object | Error> => post(`${server}/${operationPath}`, payload)
+): Promise<object | Error> => post(`${server}${operationPath}`, payload)
 
 export const getChainId = (server: string) => (): Promise<string | Error> =>
   get(`${server}/${chains}/chain_id`)
@@ -31,20 +31,20 @@ export const getConstants = (server: string) => (): Promise<
 
 export const getBootstrapped = (server: string) => (): Promise<
   BootstrappedObject | Error
-> => get(`${server}/${monitorPath}/bootstrapped`)
+> => get(`${server}${monitorPath}/bootstrapped`)
 
 export const getBalance = (server: string) => (
   account: string
 ): Promise<string | Error> =>
-  get(`${server}${contractsPath}/${account}/balance`)
+  get(`${server}/${contractsPath}/${account}/balance`)
 
 export const getDelegate = (server: string) => (
   contractAddress: string
 ): Promise<string | Error> =>
-  get(`${server}${contractsPath}/${contractAddress}/delegate`)
+  get(`${server}/${contractsPath}/${contractAddress}/delegate`)
 
 export const getDelegates = (server: string) => (): Promise<string | Error> =>
-  get(`${server}${delegatesPath}`)
+  get(`${server}/${delegatesPath}`)
 
 export const getHead = (server: string) => (): Promise<object | Error> =>
   get(`${server}/${head}`)
@@ -57,7 +57,7 @@ export const getHeadHash = (server: string) => (): Promise<string | Error> =>
 
 export const getManagerKey = (server: string) => (
   address: string
-): Promise<string | Error> =>
+): Promise<string | null | Error> =>
   get(`${server}/${contractsPath}/${address}/manager_key`)
 
 export const getCounter = (server: string) => (
@@ -67,7 +67,7 @@ export const getCounter = (server: string) => (
 
 export const getBaker = (server: string) => (
   tz1Address: string
-): Promise<string | Error> => get(`${server}${delegatesPath}/${tz1Address}`)
+): Promise<string | Error> => get(`${server}/${delegatesPath}/${tz1Address}`)
 
 export const getBallotList = (server: string) => (): Promise<
   Array<object> | Error
@@ -105,6 +105,48 @@ export const getContractStorage = (server: string) => (
 ): Promise<ContractStorage | Error> =>
   get(`${server}/${contractAddress}/storage`)
 
+interface TransactionObject {
+  source: string
+  destination: string
+  amount: string
+}
+
+export const transact = (server: string) => async ({
+  source,
+  destination,
+  amount
+}: TransactionObject): Promise<object | Error> => {
+  const managerKey = await getManagerKey(server)(source)
+  if (!managerKey) {
+    throw new Error('manager_key not set')
+  }
+
+  const counter = await getCounter(server)(source)
+  const bootstrapped = await getBootstrapped(server)()
+  const constants = await getConstants(server)()
+  const headHash = await getHeadHash(server)()
+  const chainId = await getChainId(server)()
+
+  const result = await postSimulateOperation(server)({
+    branch: headHash,
+    contents: [
+      {
+        kind: 'transaction',
+        source,
+        fee: '50000', //
+        counter,
+        gas_limit: '200',
+        amount,
+        storage_limit: '0',
+        destination
+      }
+    ],
+    signature:
+      'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q'
+  })
+  return Promise.resolve(result)
+}
+
 export const init = (server: string) => ({
   getChainId: getChainId(server),
   getConstants: getConstants(server),
@@ -127,5 +169,6 @@ export const init = (server: string) => ({
   getCurrentQuorum: getCurrentQuorum(server),
   getContract: getContract(server),
   getContractStorage: getContractStorage(server),
-  postSimulateOperation: postSimulateOperation(server)
+  postSimulateOperation: postSimulateOperation(server),
+  transact: transact(server)
 })
