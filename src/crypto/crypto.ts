@@ -58,9 +58,7 @@ export const extractKeysFromPrivateKey = () => {}
 
 export const bufferToHex = (buffer: Buffer): string =>
   Array.prototype.map
-    .call(new Uint8Array(buffer), (byte: any) =>
-      byte.toString(16).padStart(2, '0')
-    )
+    .call(buffer, byte => byte.toString(16).padStart(2, '0'))
     .join('')
 
 export const sign = ({ message, privateKey }: SignObject): string =>
