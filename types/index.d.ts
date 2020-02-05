@@ -41,6 +41,12 @@ interface Contract {
   signature: string
 }
 
+interface TransactionParam {
+  source: string
+  destination: string
+  amount: string
+}
+
 interface TransactionObject {
   contractAddress: string
   from: string
@@ -51,6 +57,22 @@ interface TransactionObject {
   gasLimit?: string
   storageLimit?: string
   revealFee?: string
+}
+
+interface Operation {
+  kind: string
+  source: string
+  fee: string
+  counter: string
+  gas_limit: string
+  storage_limit: string
+  amount: string
+  destination: string
+}
+
+interface OperationMessage {
+  branch: string
+  contents: Operation[]
 }
 
 interface ConstantsObject {

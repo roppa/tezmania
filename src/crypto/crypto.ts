@@ -58,7 +58,7 @@ export const extractKeysFromPrivateKey = () => {}
 
 export const bufferToHex = (buffer: Buffer): string =>
   Array.prototype.map
-    .call(buffer, byte => byte.toString(16).padStart(2, '0'))
+    .call(buffer, (byte: any) => byte.toString(16).padStart(2, '0'))
     .join('')
 
 export const sign = ({ message, privateKey }: SignObject): string =>
@@ -80,4 +80,55 @@ export const verify = ({
     b58decode(prefix.sig, signature),
     message,
     b58decode(prefix.edpk, publicKey)
+  )
+
+// stolen from https://github.com/TezTech/eztz/blob/master/src/main.js until I can understand what it is doing :-p
+export const zarith = (num: string): string => {
+  var fn = ''
+  let n = parseInt(num)
+  while (true) {
+    if (n < 128) {
+      if (n < 16) fn += '0'
+      fn += n.toString(16)
+      break
+    } else {
+      var b = n % 128
+      n -= b
+      n /= 128
+      b += 128
+      fn += b.toString(16)
+    }
+  }
+  return fn
+}
+
+const sliceDecode = (slice: number) => (hash: string): string =>
+  bs58check
+    .decode(hash)
+    .slice(slice)
+    .toString('hex')
+
+export const forgeAddress = (address: string): string =>
+  `0000${sliceDecode(3)(address)}`
+
+export const forgeBranch = sliceDecode(2)
+
+export const forgeOperation = ({
+  source,
+  fee,
+  counter,
+  gas_limit,
+  storage_limit,
+  amount,
+  destination
+}: Operation): string => {
+  return `08${forgeAddress(source)}${zarith(fee)}${zarith(counter)}${zarith(
+    gas_limit
+  )}${zarith(storage_limit)}${zarith(amount)}${forgeAddress(destination)}00`
+}
+
+export const forge = (source: OperationMessage) =>
+  source.contents.reduce(
+    (curr, next) => curr + forgeOperation(next),
+    forgeBranch(source.branch)
   )

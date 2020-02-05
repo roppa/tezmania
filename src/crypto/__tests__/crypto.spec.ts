@@ -3,7 +3,11 @@ import {
   extractKeysFromPrivateKey,
   bufferToHex,
   sign,
-  verify
+  verify,
+  forgeAddress,
+  forgeBranch,
+  forgeOperation
+  forge
 } from '../crypto'
 import { generateMnemonic } from '../../mnemonic/mnemonic'
 
@@ -14,6 +18,26 @@ const stubKeystore = {
   pkh: 'tz1X7JKJ114Btq3Mbz62NJxJSrmWPo4guFVq'
   keyType: 'ed25519'
 }
+
+const transactionSource = {
+  branch: 'BMHBtAaUv59LipV1czwZ5iQkxEktPJDE7A9sYXPkPeRzbBasNY8',
+  contents: [
+    {
+      kind: 'transaction',
+      source: 'tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx',
+      fee: '50000',
+      counter: '3',
+      gas_limit: '200',
+      storage_limit: '0',
+      amount: '100000000',
+      destination: 'tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN'
+    }
+  ]
+}
+
+const forgedAddress = '000002298c03ed7d454a101eb7022bc95f7e5f41ac78'
+
+const branch = 'ce69c5713dac3537254e7be59759cf59c15abd530d10501ccf9028a5786314cf'
 
 const messageSignature = 'sigg9YBuaGsJgZTzCM9mKv5hWLdte6qLfm8BuYih5VwBnN8MwLvJKDqMFJ1fhnWuz94GZot2YMJMuF8yE3gFjdckZqhTovvV'
 
@@ -72,6 +96,35 @@ describe('Crypto library', () => {
     })
     test('should return false for invalid signature', () => {
       expect(verify({ signature: messageSignature, message: 'message', publicKey: stubKeystore.publicKey })).toEqual(true)
+    })
+  })
+
+  describe('forgeAddress', () => {
+    test('should convert a tz1 address to hex', () => {
+      expect(forgeAddress(transactionSource.contents[0].source)).toEqual(forgedAddress)
+    })
+  })
+
+  describe('forgeBranch', () => {
+    test('should convert a branch has to hex', () => {
+      expect(forgeBranch(transactionSource.branch)).toEqual(branch)
+    })
+  })
+
+  describe.skip('forgeOperation', () => {
+    test('should convert an operation object into binary', () => {
+      expect(forgeOperation(transactionSource.contents[0])).toEqual('')
+    })
+  })
+
+  describe('forge', () => {
+  test('should begin with forged header, transaction number', () => {
+      expect(forge(transactionSource)).toEqual(expect.stringContaining(`${branch}08${forgedAddress}`))
+    })
+
+  test('should begin with forged header and ...', () => {
+      const expected = `${branch}08000002298c03ed7d454a101eb7022bc95f7e5f41ac78d0860303c8010080c2d72f0000e7670f32038107a59a2b9cfefae36ea21f5aa63c00`
+      expect(forge(transactionSource)).toEqual(expected)
     })
   })
 })

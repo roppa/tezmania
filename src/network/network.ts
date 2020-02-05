@@ -5,8 +5,10 @@ import axios from 'axios'
 const chains = `/chains/main`
 const head = `${chains}/blocks/head`
 const header = `${head}/header`
+const helpers = `${head}/helpers/`
 const monitorPath = `/monitor`
-const operationPath = `${head}/helpers/scripts/run_operation`
+const operationPath = `${helpers}/scripts/run_operation`
+const forgePath = `${helpers}/forge/operations`
 const constantsPath = `${head}/context/constants`
 const contractsPath = `${head}/context/contracts`
 const delegatesPath = `${head}/context/delegates`
@@ -16,11 +18,19 @@ export const get = (path: string): Promise<any | Error> =>
   axios.get(path).then(result => result.data)
 
 export const post = (path: string, payload: object): Promise<any | Error> =>
-  axios.post(path, payload).then(result => result.data)
+  axios
+    .post(path, payload, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then((result: any) => result.data)
 
 export const postSimulateOperation = (server: string) => (
   payload: object
 ): Promise<object | Error> => post(`${server}${operationPath}`, payload)
+
+export const postForgeOperations = (server: string) => (
+  operation: OperationMessage
+): Promise<string | Error> => post(`${server}${forgePath}`, operation)
 
 export const getChainId = (server: string) => (): Promise<string | Error> =>
   get(`${server}/${chains}/chain_id`)
@@ -105,17 +115,11 @@ export const getContractStorage = (server: string) => (
 ): Promise<ContractStorage | Error> =>
   get(`${server}/${contractAddress}/storage`)
 
-interface TransactionObject {
-  source: string
-  destination: string
-  amount: string
-}
-
 export const transact = (server: string) => async ({
   source,
   destination,
   amount
-}: TransactionObject): Promise<object | Error> => {
+}: TransactionParam): Promise<object | Error> => {
   const managerKey = await getManagerKey(server)(source)
   if (!managerKey) {
     throw new Error('manager_key not set')
@@ -127,7 +131,7 @@ export const transact = (server: string) => async ({
   const headHash = await getHeadHash(server)()
   const chainId = await getChainId(server)()
 
-  const result = await postSimulateOperation(server)({
+  const payload = {
     branch: headHash,
     contents: [
       {
@@ -140,10 +144,14 @@ export const transact = (server: string) => async ({
         storage_limit: '0',
         destination
       }
-    ],
-    signature:
-      'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q'
-  })
+    ]
+  }
+
+  console.log(payload)
+  console.log(JSON.stringify(payload))
+
+  const result = await postSimulateOperation(server)(payload)
+  console.log(result)
   return Promise.resolve(result)
 }
 
@@ -170,5 +178,6 @@ export const init = (server: string) => ({
   getContract: getContract(server),
   getContractStorage: getContractStorage(server),
   postSimulateOperation: postSimulateOperation(server),
+  postForgeOperations: postForgeOperations(server),
   transact: transact(server)
 })

@@ -8,6 +8,24 @@ const net = init(
 
 jest.mock('axios')
 
+const operation = {
+  branch: 'BLyypN89WuTQyLtExGP6PEuZiu5WFDxys3GTUf7Vz4KvgKcvo2E',
+  contents: [
+    {
+      kind: 'transaction',
+      source: 'tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx',
+      fee: '50000',
+      counter: '3',
+      gas_limit: '400000',
+      storage_limit: '60000',
+      amount: '100000000',
+      destination: 'tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN'
+    }
+  ]
+}
+
+const forgedOperation = 'ce69c5713dac3537254e7be59759cf59c15abd530d10501ccf9028a5786314cf08000002298c03ed7d454a101eb7022bc95f7e5f41ac78d0860303c8010080c2d72f0000e7670f32038107a59a2b9cfefae36ea21f5aa63c00'
+
 describe('network', () => {
   describe('getBalance', () => {
     test('should get balance for account', async () => {
@@ -293,31 +311,22 @@ describe('network', () => {
     })
   })
 
+  describe('postForgeOperations', () => {
+    test('should return forged string from object', async () => {
+      ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
+          data: forgedOperation
+      }))
+      expect(await net.postForgeOperations(operation)).toEqual(forgedOperation)
+    })
+  })
+
   describe('simulateOperation', () => {
   test('should dry run a transaction', async () => {
-      const simulationResponse = {
-        contents: []
-      }
+      const simulationResponse = {}
       ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
           data: simulationResponse
       }))
-      expect(await net.postSimulateOperation({
-        branch: 'BLyypN89WuTQyLtExGP6PEuZiu5WFDxys3GTUf7Vz4KvgKcvo2E',
-        contents: [
-          {
-            kind: 'transaction',
-            source: 'tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx',
-            fee: '50000',
-            counter: '3',
-            gas_limit: '400000',
-            storage_limit: '60000',
-            amount: '100000000',
-            destination: 'tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN'
-          }
-        ],
-        signature:
-          'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q'
-      })).toEqual(simulationResponse)
+      expect(await net.postSimulateOperation({})).toEqual(simulationResponse)
     })
   })
 
