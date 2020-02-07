@@ -69,7 +69,7 @@ export const bufferToHex = (buffer: Buffer | Uint8Array): string =>
     .join('')
 
 export const hexToBuffer = (hex: string) =>
-  new Uint8Array(hex.match(/.{2}/g).map(byte => parseInt(byte, 16)))
+  new Uint8Array(hex.match(/.{2}/g)!.map(byte => parseInt(byte, 16)))
 
 export const extractKeysFromSecret = (secret: string) => ({
   publicKey: b58encode(prefix.edpk, b58decode(prefix.edsk, secret).slice(32)),
@@ -83,7 +83,7 @@ export const extractKeysFromSecret = (secret: string) => ({
 // stolen from https://github.com/TezTech/eztz/blob/master/src/main.js
 export const sign = ({ message, privateKey, watermark }: SignObject) => {
   const messageBuffer = watermark
-    ? mergeBuffer(Buffer.from(watermark), hexToBuffer(message))
+    ? mergeBuffer(hexToBuffer(watermark), hexToBuffer(message))
     : hexToBuffer(message)
 
   const sig = sodium.crypto_sign_detached(
