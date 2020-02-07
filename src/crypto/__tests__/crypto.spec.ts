@@ -48,6 +48,8 @@ const roppaKeystore = {
   keyType: 'ed25519'
 }
 
+const hexMessage = Buffer.from('message', 'ascii').toString('hex')
+
 const messageSignature =
   'edsigu1XwSv9d1F1vpiQSCc7wN93R9euRX6MnJxSB8ASFH4tBqihfnhuvfCRBgCyh8ynKk9BmeU5nCG5DFhemfGGG8LfmTwwG7d'
 
@@ -132,7 +134,7 @@ describe('Crypto library', () => {
   describe('sign', () => {
     test('should return message signature', () => {
       const result = sign({
-        message: '6d657373616765',
+        message: hexMessage,
         privateKey: roppaKeystore.privateKey,
         watermark: undefined
       })
@@ -143,7 +145,7 @@ describe('Crypto library', () => {
   describe('verify', () => {
     test('should return false for invalid signature', () => {
       const { sig } = sign({
-        message: '6d657373616765',
+        message: hexMessage,
         privateKey: roppaKeystore.privateKey,
         watermark: undefined
       })
@@ -159,7 +161,7 @@ describe('Crypto library', () => {
 
     test('should return true for valid signature', () => {
       const { sig } = sign({
-        message: '6d657373616765',
+        message: hexMessage,
         privateKey: roppaKeystore.privateKey,
         watermark: undefined
       })
@@ -167,7 +169,7 @@ describe('Crypto library', () => {
       expect(
         verify({
           signature: sig,
-          message: '6d657373616765',
+          message: hexMessage,
           publicKey: roppaKeystore.publicKey
         })
       ).toEqual(true)

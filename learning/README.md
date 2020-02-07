@@ -29,6 +29,12 @@ Like any blockchain (IMHO) there is a bit of a learning curve. Same with Tezos a
   <dd>OCaml Package Manager</dd>
 </dl>
 
+## Basics
+
+For beginners I am creating resources for understanding the basics:
+
+- [Types - binary, hex, and buffer](./TYPES.md)
+
 ## Running a Tezos network
 
 To get Tezos I found the only way was to use Docker. The installation was riddled with bugs, probably due to an OSX update. Anyway, follow [the 'how to get' instructions](https://tezos.gitlab.io/introduction/howtoget.html).
