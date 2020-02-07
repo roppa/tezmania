@@ -115,46 +115,6 @@ export const getContractStorage = (server: string) => (
 ): Promise<ContractStorage | Error> =>
   get(`${server}/${contractAddress}/storage`)
 
-export const transact = (server: string) => async ({
-  source,
-  destination,
-  amount
-}: TransactionParam): Promise<object | Error> => {
-  const managerKey = await getManagerKey(server)(source)
-  if (!managerKey) {
-    throw new Error('manager_key not set')
-  }
-
-  const counter = await getCounter(server)(source)
-  const bootstrapped = await getBootstrapped(server)()
-  const constants = await getConstants(server)()
-  const headHash = await getHeadHash(server)()
-  const chainId = await getChainId(server)()
-
-  const payload = {
-    branch: headHash,
-    contents: [
-      {
-        kind: 'transaction',
-        source,
-        fee: '50000', //
-        counter,
-        gas_limit: '200',
-        amount,
-        storage_limit: '0',
-        destination
-      }
-    ]
-  }
-
-  console.log(payload)
-  console.log(JSON.stringify(payload))
-
-  const result = await postSimulateOperation(server)(payload)
-  console.log(result)
-  return Promise.resolve(result)
-}
-
 export const init = (server: string) => ({
   getChainId: getChainId(server),
   getConstants: getConstants(server),
@@ -178,6 +138,5 @@ export const init = (server: string) => ({
   getContract: getContract(server),
   getContractStorage: getContractStorage(server),
   postSimulateOperation: postSimulateOperation(server),
-  postForgeOperations: postForgeOperations(server),
-  transact: transact(server)
+  postForgeOperations: postForgeOperations(server)
 })

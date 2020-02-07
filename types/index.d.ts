@@ -20,10 +20,11 @@ interface KeyStore {
 interface SignObject {
   message: string
   privateKey: string
+  watermark?: string
 }
 
 interface VerifyObject {
-  signature: string
+  signature: Uint8Array
   message: string
   publicKey: string
 }
