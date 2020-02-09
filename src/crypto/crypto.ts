@@ -83,7 +83,7 @@ export const extractKeysFromSecret = (secret: string) => ({
 // stolen from https://github.com/TezTech/eztz/blob/master/src/main.js
 export const sign = ({ message, privateKey, watermark }: SignObject) => {
   const messageBuffer = watermark
-    ? mergeBuffer(hexToBuffer(watermark), hexToBuffer(message))
+    ? mergeBuffer(new Uint8Array([watermark]), hexToBuffer(message))
     : hexToBuffer(message)
 
   const sig = sodium.crypto_sign_detached(

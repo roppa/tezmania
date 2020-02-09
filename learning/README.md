@@ -33,7 +33,7 @@ Like any blockchain (IMHO) there is a bit of a learning curve. Same with Tezos a
 
 For beginners I am creating resources for understanding the basics:
 
-- [Types - binary, hex, and buffer](./TYPES.md)
+- [Types - binary, hex, buffer, and base58](./TYPES.md)
 
 ## Running Tezos locally
 

@@ -1,4 +1,4 @@
-# Types - Binary, Hex, and Buffer
+# Types - Binary, Hex, Buffer, and Base58
 
 I'd like to make this guide as approachable as possible for as many people as possible, therefore I'd like to cover many aspects that are taken for granted or considered too basic. If you are advanced then skip to the areas more suited to your level.
 
@@ -69,3 +69,9 @@ To convert back to text we can use:
 ```js
 hello.toString('ascii')
 ```
+
+## Base58
+
+As we have seen, we can convert text to binary, and vice versa. Sometimes the hexadecimal could seem confusing, for example the difference between '01' and 'Ol'. Satoshi Nakamoto devised a system where characters that could be confused with one another would be removed. This is base58 and is common in the various blockchains.
+
+A good example is on the [Bitcoin Wiki](https://en.bitcoin.it/wiki/Base58Check_encoding).

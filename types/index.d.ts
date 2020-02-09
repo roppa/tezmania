@@ -20,7 +20,7 @@ interface KeyStore {
 interface SignObject {
   message: string
   privateKey: string
-  watermark?: string
+  watermark?: number
 }
 
 interface VerifyObject {
