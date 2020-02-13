@@ -1,30 +1,13 @@
 import axios from 'axios'
 
 import { init } from '../network'
+import { forgedOperation, transactionParams, operation, headHash } from '../../mocks'
 
 const net = init(
   'http://127.0.0.1:8732'
 )
 
 jest.mock('axios')
-
-const operation = {
-  branch: 'BLyypN89WuTQyLtExGP6PEuZiu5WFDxys3GTUf7Vz4KvgKcvo2E',
-  contents: [
-    {
-      kind: 'transaction',
-      source: 'tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx',
-      fee: '50000',
-      counter: '3',
-      gas_limit: '400000',
-      storage_limit: '60000',
-      amount: '100000000',
-      destination: 'tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN'
-    }
-  ]
-}
-
-const forgedOperation = 'ce69c5713dac3537254e7be59759cf59c15abd530d10501ccf9028a5786314cf08000002298c03ed7d454a101eb7022bc95f7e5f41ac78d0860303c8010080c2d72f0000e7670f32038107a59a2b9cfefae36ea21f5aa63c00'
 
 describe('network', () => {
   describe('getBalance', () => {
@@ -40,7 +23,6 @@ describe('network', () => {
   })
 
   describe('getConstants', () => {
-
     const constantsExample = {
       proof_of_work_nonce_size: 8,
       nonce_length: 32,
@@ -320,13 +302,57 @@ describe('network', () => {
     })
   })
 
-  describe('simulateOperation', () => {
+  describe('post operations - simulate, operation', () => {
   test('should dry run a transaction', async () => {
       const simulationResponse = {}
       ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
           data: simulationResponse
       }))
       expect(await net.postSimulateOperation({})).toEqual(simulationResponse)
+    })
+  test('should post a transaction', async () => {
+      const response = {}
+      ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
+          data: response
+      }))
+      expect(await net.postOperation({})).toEqual(response)
+    })
+  })
+
+  describe('transact', () => {
+
+
+    test('should throw if manager_key does not exist', async () => {
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: undefined
+      }))
+      await expect(net.transact({})).rejects.toThrow('manager_key not set')
+    })
+
+    test('should perform a transaction', async () => {
+      const successTransaction = {
+        success: 'true'
+      }
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'edpkuqLhJdGGF4u9qvMqQHgLsA2w4usQTFPYzoasUHpt5kN7sG4ZeT'
+      }))
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: '2'
+      }))
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: {
+          block: headHash,
+          timestamp: '2020-02-13T10:43:12Z'
+        }
+      }))
+      ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
+        data: {
+          success: 'true'
+        }
+      }))
+
+      expect(await net.transact(transactionParams))
+        .toEqual(successTransaction)
     })
   })
 

@@ -2,6 +2,8 @@
 
 I'd like to make this guide as approachable as possible for as many people as possible, therefore I'd like to cover many aspects that are taken for granted or considered too basic. If you are advanced then skip to the areas more suited to your level.
 
+In the Tezos protocol, data is [serialised](https://en.wikipedia.org/wiki/Serialization). Serialised means it takes one format, usually one specific to the program or human friendly, and converts it into a format that can be sent across a network or stored, which then at some later point can be converted back to the original format. This is why we need to understand things such as binary and hex, as this is the format used for serialisation.
+
 ## Binary
 
 Lets take a random number, between and including 0 and 255. Lets say 72. How does this number get converted into 0s and 1s in binary? Just like decimal, you have a base. You take the your number and divide it by the base (10 in decimal, 2 in binary) in order to get orders of magnitude. For example:

@@ -13,61 +13,13 @@ import {
 
 import { generateMnemonic } from '../../mnemonic/mnemonic'
 
-// example account from faucet
-const roppa = {
-  mnemonic: [
-    'exercise',
-    'situate',
-    'gallery',
-    'random',
-    'fragile',
-    'purpose',
-    'elevator',
-    'odor',
-    'friend',
-    'cage',
-    'occur',
-    'aim',
-    'attract',
-    'horror',
-    'stool'
-  ],
-  secret: '983142fbeba332140dbb4a8d4d5749c279ae2587',
-  amount: '23892354330',
-  pkh: 'tz1ipQzB7tXwafCZn9hJBsJLqrAHWKjK6FNd',
-  password: 'oBKWAWiGgE',
-  email: 'rzqhubtg.lixdjury@tezos.example.org'
-}
-
-const roppaKeystore = {
-  mnemonic: roppa.mnemonic.join(' '),
-  publicKey: 'edpku2xJnryQwRBr11CQC9FaqZrB6K23KdkzQbu5XEqAtM8vHyVqtr',
-  pkh: 'tz1R5ce7MiHEpTfnUTePA5Bv4Mzq1uG13YMU',
-  privateKey:
-    'edskRkdTqB1GNzBtwnCUA4KX6gfS8oRWCuKdLZmYzgrRgGbwqswtbZeY59q5DxfNZahgV1B6V8eyZ79FpU4687cR9Qve6kXRWc',
-  keyType: 'ed25519'
-}
+import { roppa, transactionSource, roppaKeystore } from '../../mocks'
 
 const hexMessage = Buffer.from('message', 'ascii').toString('hex')
 
 const messageSignature =
   'edsigu1XwSv9d1F1vpiQSCc7wN93R9euRX6MnJxSB8ASFH4tBqihfnhuvfCRBgCyh8ynKk9BmeU5nCG5DFhemfGGG8LfmTwwG7d'
 
-const transactionSource = {
-  branch: 'BMHBtAaUv59LipV1czwZ5iQkxEktPJDE7A9sYXPkPeRzbBasNY8',
-  contents: [
-    {
-      kind: 'transaction',
-      source: 'tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx',
-      fee: '50000',
-      counter: '3',
-      gas_limit: '200',
-      storage_limit: '0',
-      amount: '100000000',
-      destination: 'tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN'
-    }
-  ]
-}
 const forgedAddress = '000002298c03ed7d454a101eb7022bc95f7e5f41ac78'
 const branch =
   'ce69c5713dac3537254e7be59759cf59c15abd530d10501ccf9028a5786314cf'
@@ -134,16 +86,16 @@ describe('Crypto library', () => {
   })
 
   describe('sign', () => {
-    test('should return message signature', () => {
-      const result = sign({
+    test('should return message signature', async () => {
+      const result = await sign({
         message: hexMessage,
         privateKey: roppaKeystore.privateKey,
         watermark: undefined
       })
       expect(result.edsig).toEqual(messageSignature)
     })
-    test('should sign a forged message with watermark', () => {
-      const result = sign({
+    test('should sign a forged message with watermark', async () => {
+      const result = await sign({
         message: forgedTransaction,
         privateKey: roppaKeystore.privateKey,
         watermark: 3
@@ -162,8 +114,8 @@ describe('Crypto library', () => {
   })
 
   describe('verify', () => {
-    test('should return false for invalid signature', () => {
-      const { sig } = sign({
+    test('should return false for invalid signature', async () => {
+      const { sig } = await sign({
         message: hexMessage,
         privateKey: roppaKeystore.privateKey,
         watermark: undefined
@@ -178,8 +130,8 @@ describe('Crypto library', () => {
       ).toEqual(false)
     })
 
-    test('should return true for valid signature', () => {
-      const { sig } = sign({
+    test('should return true for valid signature', async () => {
+      const { sig } = await sign({
         message: hexMessage,
         privateKey: roppaKeystore.privateKey,
         watermark: undefined

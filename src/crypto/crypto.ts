@@ -53,7 +53,7 @@ export const generateKeysFromMnemonicAndPassphrase = async ({
   const { publicKey, privateKey, keyType } = await getKeyStore(
     await getSeed(mnemonic, passphrase)
   )
-
+  await sodium.ready
   return {
     publicKey: b58encode(prefix.edpk, publicKey),
     privateKey: b58encode(prefix.edsk, privateKey),
@@ -81,11 +81,11 @@ export const extractKeysFromSecret = (secret: string) => ({
 })
 
 // stolen from https://github.com/TezTech/eztz/blob/master/src/main.js
-export const sign = ({ message, privateKey, watermark }: SignObject) => {
+export const sign = async ({ message, privateKey, watermark }: SignObject) => {
   const messageBuffer = watermark
     ? mergeBuffer(new Uint8Array([watermark]), hexToBuffer(message))
     : hexToBuffer(message)
-
+  await sodium.ready
   const sig = sodium.crypto_sign_detached(
     sodium.crypto_generichash(32, messageBuffer),
     b58decode(prefix.edsk, privateKey),
@@ -131,16 +131,16 @@ const zarith = (num: string): string => {
   return fn
 }
 
-const sliceDecode = (slice: number) => (hash: string): string =>
+const sliceDecodeHash = (slice: number) => (hash: string): string =>
   bs58check
     .decode(hash)
     .slice(slice)
     .toString('hex')
 
 export const forgeAddress = (address: string): string =>
-  `0000${sliceDecode(3)(address)}`
+  `0000${sliceDecodeHash(3)(address)}`
 
-export const forgeBranch = sliceDecode(2)
+export const forgeBranch = sliceDecodeHash(2)
 
 export const forgeOperation = ({
   source,

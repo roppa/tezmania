@@ -42,19 +42,14 @@ interface Contract {
   signature: string
 }
 
-interface TransactionParam {
-  source: string
-  destination: string
-  amount: string
-}
-
-interface TransactionObject {
-  contractAddress: string
+interface Transaction {
   from: string
+  to: string
   keys: string
   amount: string
-  parameter: string
+  parameters: string
   fee: string
+  privateKey: string
   gasLimit?: string
   storageLimit?: string
   revealFee?: string
