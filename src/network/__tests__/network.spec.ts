@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { init } from '../network'
-import { forgedOperation, transactionParams, operation, headHash } from '../../mocks'
+import { forgedOperation, transactionParams, operation, headHash } from '../../__mocks__'
 
 const net = init(
   'http://127.0.0.1:8732'

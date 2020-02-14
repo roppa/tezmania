@@ -13,7 +13,7 @@ import {
 
 import { generateMnemonic } from '../../mnemonic/mnemonic'
 
-import { roppa, transactionSource, roppaKeystore } from '../../mocks'
+import { roppa, transactionSource, roppaKeystore } from '../../__mocks__'
 
 const hexMessage = Buffer.from('message', 'ascii').toString('hex')
 
