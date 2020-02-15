@@ -14,6 +14,8 @@ You can [read a lovely short overview based on meetings the OCaml team had](http
 
 ## Definitions
 
+A full [glossary is available on Tezos.gitlab](https://tezos.gitlab.io/user/glossary.html).
+
 <dl>
   <dt>delegates</dt>
   <dd>Delegates are miners in the Tezos Proof of stake system. Tez are staked</dd>
