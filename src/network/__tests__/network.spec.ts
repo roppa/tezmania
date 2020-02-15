@@ -345,6 +345,9 @@ describe('network', () => {
           timestamp: '2020-02-13T10:43:12Z'
         }
       }))
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'chain_id'
+      }))
       ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
         data: {
           success: 'true'

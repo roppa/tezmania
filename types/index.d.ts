@@ -55,6 +55,10 @@ interface Transaction {
   revealFee?: string
 }
 
+interface HeadObject {
+  chain_id: string
+}
+
 interface Operation {
   kind: string
   source: string

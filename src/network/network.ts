@@ -62,7 +62,7 @@ export const getDelegate = (server: string) => (
 export const getDelegates = (server: string) => (): Promise<string | Error> =>
   get(`${server}/${delegatesPath}`)
 
-export const getHead = (server: string) => (): Promise<object | Error> =>
+export const getHead = (server: string) => (): Promise<HeadObject | Error> =>
   get(`${server}/${head}`)
 
 export const getHeader = (server: string) => (): Promise<object | Error> =>
@@ -137,7 +137,7 @@ export const transact = (server: string) => async ({
 
   const counter = await getCounter(server)(from)
   const { block } = (await getBootstrapped(server)()) as BootstrappedObject
-  // const constants = await getConstants(server)()
+  const { chain_id } = (await getHead(server)()) as HeadObject
 
   const operation = {
     branch: block,
@@ -161,7 +161,10 @@ export const transact = (server: string) => async ({
     watermark: 3
   })
 
-  return await postOperation(server)({ ...operation, signature: edsig })
+  return await postOperation(server)({
+    operation: { ...operation, signature: edsig },
+    chain_id
+  })
 }
 
 export const init = (server: string) => ({
