@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { init } from '../network'
-import { forgedOperation, transactionParams, operation, headHash } from '../../__mocks__'
+import { forgedOperation, transactionParams, operation, headHash, transactionResponse } from '../../__mocks__'
 
 const net = init(
   'http://127.0.0.1:8732'
@@ -330,9 +330,6 @@ describe('network', () => {
     })
 
     test('should perform a transaction', async () => {
-      const successTransaction = {
-        success: 'true'
-      }
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
         data: 'edpkuqLhJdGGF4u9qvMqQHgLsA2w4usQTFPYzoasUHpt5kN7sG4ZeT'
       }))
@@ -349,13 +346,11 @@ describe('network', () => {
         data: 'chain_id'
       }))
       ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
-        data: {
-          success: 'true'
-        }
+        data: transactionResponse
       }))
 
       expect(await net.transact(transactionParams))
-        .toEqual(successTransaction)
+        .toEqual(transactionResponse)
     })
   })
 

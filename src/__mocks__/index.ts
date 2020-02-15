@@ -79,3 +79,45 @@ export const operation = {
     }
   ]
 }
+
+export const transactionResponse = {
+  contents: [
+    {
+      kind: 'transaction',
+      source: 'tz1ipQzB7tXwafCZn9hJBsJLqrAHWKjK6FNd',
+      fee: '5000',
+      counter: '346216',
+      gas_limit: '200',
+      storage_limit: '0',
+      amount: '100',
+      destination: 'tz1b6tb9NVP6PuUeVgRdVrz8AurDq6puM5Xe',
+      metadata: {
+        balance_updates: [
+          {
+            kind: 'contract',
+            contract: 'tz1ipQzB7tXwafCZn9hJBsJLqrAHWKjK6FNd',
+            change: '-5000'
+          },
+          {
+            kind: 'freezer',
+            category: 'fees',
+            delegate: 'tz1Ke2h7sDdakHJQh8WX4Z372du1KChsksyU',
+            cycle: 142,
+            change: '5000'
+          }
+        ],
+        operation_result: {
+          status: 'failed',
+          errors: [
+            {
+              kind: 'temporary',
+              id: 'proto.005-PsBabyM1.gas_exhausted.operation'
+            }
+          ]
+        }
+      }
+    }
+  ],
+  signature:
+    'edsigu1gXQq2pzkHKFfR6DbUzBqQ8h2qeckpuZ9yPFoNo1gXTv6SfWpHctiDFs2XwRrQTiZVJiVp67bUZBuHa3pVT5EF4dxdP9Y'
+}
