@@ -121,3 +121,6 @@ export const transactionResponse = {
   signature:
     'edsigu1gXQq2pzkHKFfR6DbUzBqQ8h2qeckpuZ9yPFoNo1gXTv6SfWpHctiDFs2XwRrQTiZVJiVp67bUZBuHa3pVT5EF4dxdP9Y'
 }
+
+export const transactionSignature =
+  'edsigtgnsraGoXtPujHoNZxJzP1nqo1V4PfULFx5yAp1ujAMqdMAXgCdaCUSWF4DN4nzfM5sU2BQAgAFZM26KqU5G2bW95RzmFG'

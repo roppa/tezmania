@@ -1,11 +1,10 @@
 import axios from 'axios'
 
-import { init } from '../network'
-import { forgedOperation, transactionParams, operation, headHash, transactionResponse } from '../../__mocks__'
+import { init, operationPath } from '../network'
+import { forgedOperation, transactionParams, operation, headHash, transactionResponse, transactionSignature } from '../../__mocks__'
 
-const net = init(
-  'http://127.0.0.1:8732'
-)
+const host = 'http://127.0.0.1:8732'
+const net = init(host)
 
 jest.mock('axios')
 
@@ -330,6 +329,7 @@ describe('network', () => {
     })
 
     test('should perform a transaction', async () => {
+
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
         data: 'edpkuqLhJdGGF4u9qvMqQHgLsA2w4usQTFPYzoasUHpt5kN7sG4ZeT'
       }))
@@ -343,14 +343,33 @@ describe('network', () => {
         }
       }))
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
-        data: 'chain_id'
+        data: { chain_id: 'chain_id' }
       }))
-      ;(<jest.Mock>axios.post).mockImplementationOnce(async () => ({
+      const postResponse = jest.fn(async () => ({
         data: transactionResponse
       }))
+      ;(<jest.Mock>axios.post).mockImplementationOnce(postResponse)
 
       expect(await net.transact(transactionParams))
         .toEqual(transactionResponse)
+      expect(postResponse).toHaveBeenCalledWith(`${host}${operationPath}`, {
+        chain_id: 'chain_id',
+        operation: {
+          branch: headHash,
+          contents: [{
+            storage_limit: transactionParams.storageLimit,
+            counter: '3',
+            amount: transactionParams.amount,
+            destination: transactionParams.to,
+            fee: transactionParams.fee,
+            gas_limit: transactionParams.gasLimit,
+            kind: 'transaction',
+            source: transactionParams.from
+          }],
+          signature: transactionSignature
+        },
+        { headers : {"Content-Type": "application/json"}}
+      })
     })
   })
 

@@ -13,7 +13,12 @@ import {
 
 import { generateMnemonic } from '../../mnemonic/mnemonic'
 
-import { roppa, transactionSource, roppaKeystore } from '../../__mocks__'
+import {
+  roppa,
+  transactionSource,
+  roppaKeystore,
+  transactionSignature
+} from '../../__mocks__'
 
 const hexMessage = Buffer.from('message', 'ascii').toString('hex')
 
@@ -24,8 +29,6 @@ const forgedAddress = '000002298c03ed7d454a101eb7022bc95f7e5f41ac78'
 const branch =
   'ce69c5713dac3537254e7be59759cf59c15abd530d10501ccf9028a5786314cf'
 const forgedTransaction = `ce69c5713dac3537254e7be59759cf59c15abd530d10501ccf9028a5786314cf08000002298c03ed7d454a101eb7022bc95f7e5f41ac78d0860303c8010080c2d72f0000e7670f32038107a59a2b9cfefae36ea21f5aa63c00`
-const transactionSignature =
-  'edsigtgnsraGoXtPujHoNZxJzP1nqo1V4PfULFx5yAp1ujAMqdMAXgCdaCUSWF4DN4nzfM5sU2BQAgAFZM26KqU5G2bW95RzmFG'
 
 describe('Crypto library', () => {
   describe('generateKeysFromMnemonicAndPassphrase', () => {
