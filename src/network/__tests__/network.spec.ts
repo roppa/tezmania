@@ -343,7 +343,7 @@ describe('network', () => {
         }
       }))
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
-        data: { chain_id: 'chain_id' }
+        data: 'chain_id'
       }))
       const postResponse = jest.fn(async () => ({
         data: transactionResponse

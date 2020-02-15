@@ -137,7 +137,7 @@ export const transact = (server: string) => async ({
 
   const counter = await getCounter(server)(from)
   const { block } = (await getBootstrapped(server)()) as BootstrappedObject
-  const { chain_id } = (await getHead(server)()) as HeadObject
+  const chain_id = await getChainId(server)()
 
   const operation = {
     branch: block,
