@@ -320,7 +320,6 @@ describe('network', () => {
 
   describe('transact', () => {
 
-
     test('should throw if manager_key does not exist', async () => {
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
         data: undefined
