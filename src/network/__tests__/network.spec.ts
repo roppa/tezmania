@@ -9,6 +9,7 @@ const net = init(host)
 jest.mock('axios')
 
 describe('network', () => {
+
   describe('getBalance', () => {
     test('should get balance for account', async () => {
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
@@ -366,10 +367,15 @@ describe('network', () => {
             source: transactionParams.from
           }],
           signature: transactionSignature
-        },
-        { headers : {"Content-Type": "application/json"}}
+        }, {
+          headers : { 'Content-Type': 'application/json' }
+        }
       })
     })
+  })
+
+  describe('originate', () => {
+
   })
 
 })

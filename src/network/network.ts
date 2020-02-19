@@ -3,18 +3,18 @@ import { forge, sign } from '../crypto/crypto'
 
 // Reference: https://tezos.gitlab.io/api/rpc.html#rpc-index
 
-export const chains = `/chains/main`
-export const head = `${chains}/blocks/head`
-export const header = `${head}/header`
-export const helpers = `${head}/helpers`
-export const monitorPath = `/monitor`
+const chains = `/chains/main`
+const head = `${chains}/blocks/head`
+const header = `${head}/header`
+const helpers = `${head}/helpers`
+const monitorPath = `/monitor`
 export const operationPath = `${helpers}/scripts/run_operation`
-export const simulationPath = `${helpers}/preapply/operations`
-export const forgePath = `${helpers}/forge/operations`
-export const constantsPath = `${head}/context/constants`
-export const contractsPath = `${head}/context/contracts`
-export const delegatesPath = `${head}/context/delegates`
-export const votesPath = `${head}/votes`
+const simulationPath = `${helpers}/preapply/operations`
+const forgePath = `${helpers}/forge/operations`
+const constantsPath = `${head}/context/constants`
+const contractsPath = `${head}/context/contracts`
+const delegatesPath = `${head}/context/delegates`
+const votesPath = `${head}/votes`
 
 export const get = (path: string): Promise<any | Error> =>
   axios.get(path).then(result => result.data)
