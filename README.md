@@ -1,6 +1,6 @@
 # Tezmania - a Tezos client
 
-Tezmania is a client for Tezos allowing you to query the blockchain, interact with smart contracts and more. This is mainly a tool for learning, so if you are learning about Tezos I'm working on [some resources in the 'learning' folder](/learning).
+Tezmania is a client for Tezos allowing you to query the blockchain, interact with smart contracts and more. This is mainly a tool for learning, so if you are learning about Tezos I'm working on [some resources in the 'learning' folder](/learning/README.md).
 
 ## init (network functions)
 

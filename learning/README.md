@@ -1,49 +1,26 @@
-## Learning about Tezos
+## Learning about Blockchain and Tezos
 
-Like any blockchain (IMHO) there is a bit of a learning curve. Same with Tezos as it differs to most blockchains.
+Like any blockchain (IMHO) there is a bit of a learning curve. Same with Tezos as it differs to most blockchains. For beginners I am using this app as a resource for understanding the basics through to advanced.
+
+## What is a blockchain
+
+If you are new to blockchain, checkout the [executive overview](./EXECUTIVE-OVERVIEW.md) to get a broad understanding of blockchain.
 
 ## What is Tezos
 
 Tezos was created by Arthur Breitman. The name 'Tezos' came from Breitman’s algorithm to find unique domains.
 
-In the whitepaper, Tezos describes itself as a distributed blockchain that 'governs itself by establishing a true digital commonwealth'. What does that mean?
+In the whitepaper, Tezos is describes as a distributed blockchain that 'governs itself by establishing a true digital commonwealth'. What does that mean?
 
-Other distributed blockchains such as Bitcoin (and all the flavours of Bitcoin), Ethereum etc all have developers working and contributing to the code and protocol. The difference with Tezos is that it is the first self-amending cryptocurrency - meaning the developers could be anyone, and changes to be included into the protocol are voted in by the community.
-
-You can [read a lovely short overview based on meetings the OCaml team had](https://ocaml.org/meetings/ocaml/2017/.extended-abstract__2017__benjamin-canou_gregoire-henry_pierre-chambart_fabrice-le-fessant_arthur-breitman__tezos-the-ocaml-crypto-ledger.pdf)
+Other blockchains such as Bitcoin (and all flavours of), Ethereum, etc all have developers working and contributing to the code and protocol as part of the organisation itself. This kind of defeats the purpose of decentralised. You could say that anyone could contribute to the codebase, but ultimately the central organisation has the say on what is committed. The difference with Tezos is that it is the first self-amending cryptocurrency - meaning the developers could be anyone, and changes to be included into the protocol are voted in by the community. You can [read a lovely short overview based on meetings the OCaml team had](https://ocaml.org/meetings/ocaml/2017/.extended-abstract__2017__benjamin-canou_gregoire-henry_pierre-chambart_fabrice-le-fessant_arthur-breitman__tezos-the-ocaml-crypto-ledger.pdf)
 
 ## Definitions
 
 A full [glossary is available on Tezos.gitlab](https://tezos.gitlab.io/user/glossary.html).
 
-<dl>
-  <dt>delegates</dt>
-  <dd>Delegates are miners in the Tezos Proof of stake system. Tez are staked</dd>
-  <dt>edsig</dt>
-  <dd>-</dd>
-  <dt>edpk</dt>
-  <dd>-</dd>
-  <dt>sig</dt>
-  <dd>-</dd>
-  <dt>pk</dt>
-  <dd>-</dd>
-  <dt>sk</dt>
-  <dd>-</dd>
-  <dt>spsk</dt>
-  <dd>-</dd>
-  <dt>baker</dt>
-  <dd>-</dd>
-  <dt>cycle</dt>
-  <dd>-</dd>
-  <dt>bft</dt>
-  <dd>byzantine fault tolerant</dd>
-  <dt>opam</dt>
-  <dd>OCaml Package Manager</dd>
-</dl>
-
 ## Basics
 
-For beginners I am creating resources for understanding the basics:
+Low level data formats:
 
 - [Types - binary, hex, buffer, and base58](./TYPES.md)
 

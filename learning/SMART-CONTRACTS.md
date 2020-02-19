@@ -10,3 +10,5 @@ From the client, list know contracts:
 ```
 ./babylonnet.sh client list known contracts
 ```
+
+Tezos smart contracts are writen in a programming language called Michelson.
