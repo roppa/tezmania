@@ -115,7 +115,10 @@ export const getCurrentQuorum = (server: string) => (): Promise<
 export const getContract = (server: string) => (
   contractAddress: string
 ): Promise<Contract | Error> =>
-  get(`${server}/${contractsPath}/${contractAddress}`)
+  Promise.all([
+    get(`${server}/${contractsPath}/${contractAddress}`),
+    get(`${server}/${contractsPath}/${contractAddress}/entrypoints`)
+  ]).then(result => ({ ...result[0], ...result[1] }))
 
 export const getContractStorage = (server: string) => (
   contractAddress: string

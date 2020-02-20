@@ -131,3 +131,14 @@ export const transactionResponse = {
 
 export const transactionSignature =
   'edsigtgnsraGoXtPujHoNZxJzP1nqo1V4PfULFx5yAp1ujAMqdMAXgCdaCUSWF4DN4nzfM5sU2BQAgAFZM26KqU5G2bW95RzmFG'
+
+export const entrypoints = {
+  entrypoints: {
+    increment: {
+      prim: 'int'
+    },
+    decrement: {
+      prim: 'int'
+    }
+  }
+}

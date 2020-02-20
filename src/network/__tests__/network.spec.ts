@@ -8,6 +8,7 @@ import {
   headHash,
   transactionResponse,
   transactionSignature,
+  entrypoints
 } from '../../__mocks__'
 
 const host = 'http://127.0.0.1:8732'
@@ -269,12 +270,15 @@ describe('network', () => {
           delegate: 'xxx',
           script: 'xxx',
           counter: '0',
-          signature: 'xx',
+          signature: 'xx'
         }
         ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
           data
         }))
-        expect(await net.getContract('contractAddress')).toEqual(data)
+        ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+          data: entrypoints
+        }))
+        expect(await net.getContract('contractAddress')).toEqual({ ...data, ...entrypoints })
     })
   })
 
@@ -383,16 +387,6 @@ describe('network', () => {
 
   describe('getContractEntrypoints', () => {
     test('should return contract entrypoints', async () => {
-      const entrypoints = {
-        entrypoints: {
-          increment: {
-            prim: 'int'
-          },
-          decrement: {
-            prim: 'int'
-          }
-        }
-      }
       ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
         data: entrypoints
       }))
