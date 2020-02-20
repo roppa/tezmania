@@ -1,7 +1,14 @@
 import axios from 'axios'
 
 import { init, operationPath } from '../network'
-import { forgedOperation, transactionParams, operation, headHash, transactionResponse, transactionSignature } from '../../__mocks__'
+import {
+  forgedOperation,
+  transactionParams,
+  operation,
+  headHash,
+  transactionResponse,
+  transactionSignature,
+} from '../../__mocks__'
 
 const host = 'http://127.0.0.1:8732'
 const net = init(host)
@@ -374,8 +381,23 @@ describe('network', () => {
     })
   })
 
-  describe('originate', () => {
-
+  describe('getContractEntrypoints', () => {
+    test('should return contract entrypoints', async () => {
+      const entrypoints = {
+        entrypoints: {
+          increment: {
+            prim: 'int'
+          },
+          decrement: {
+            prim: 'int'
+          }
+        }
+      }
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: entrypoints
+      }))
+      expect(await net.getContractEntrypoints()).toEqual(entrypoints)
+    })
   })
 
 })

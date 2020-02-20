@@ -114,12 +114,13 @@ export const getCurrentQuorum = (server: string) => (): Promise<
 
 export const getContract = (server: string) => (
   contractAddress: string
-): Promise<Contract | Error> => get(`${server}/${contractAddress}`)
+): Promise<Contract | Error> =>
+  get(`${server}/${contractsPath}/${contractAddress}`)
 
 export const getContractStorage = (server: string) => (
   contractAddress: string
 ): Promise<ContractStorage | Error> =>
-  get(`${server}/${contractAddress}/storage`)
+  get(`${server}/${contractsPath}/${contractAddress}/storage`)
 
 export const transact = (server: string) => async ({
   from,
@@ -167,6 +168,11 @@ export const transact = (server: string) => async ({
   })
 }
 
+export const getContractEntrypoints = (server: string) => (
+  contractAddress: string
+): Promise<Contract | Error> =>
+  get(`${server}/${contractsPath}/${contractAddress}/entrypoints`)
+
 export const init = (server: string) => ({
   getChainId: getChainId(server),
   getConstants: getConstants(server),
@@ -192,5 +198,6 @@ export const init = (server: string) => ({
   postSimulateOperation: postSimulateOperation(server),
   postOperation: postOperation(server),
   postForgeOperations: postForgeOperations(server),
-  transact: transact(server)
+  transact: transact(server),
+  getContractEntrypoints: getContractEntrypoints(server)
 })
