@@ -3,18 +3,18 @@ import { forge, sign } from '../crypto/crypto'
 
 // Reference: https://tezos.gitlab.io/api/rpc.html#rpc-index
 
-const chains = `/chains/main`
-const head = `${chains}/blocks/head`
-const header = `${head}/header`
-const helpers = `${head}/helpers`
-const monitorPath = `/monitor`
+export const chains = `/chains/main`
+export const head = `${chains}/blocks/head`
+export const header = `${head}/header`
+export const helpers = `${head}/helpers`
+export const monitorPath = `/monitor`
 export const operationPath = `${helpers}/scripts/run_operation`
-const simulationPath = `${helpers}/preapply/operations`
-const forgePath = `${helpers}/forge/operations`
-const constantsPath = `${head}/context/constants`
-const contractsPath = `${head}/context/contracts`
-const delegatesPath = `${head}/context/delegates`
-const votesPath = `${head}/votes`
+export const simulationPath = `${helpers}/preapply/operations`
+export const forgePath = `${helpers}/forge/operations`
+export const constantsPath = `${head}/context/constants`
+export const contractsPath = `${head}/context/contracts`
+export const delegatesPath = `${head}/context/delegates`
+export const votesPath = `${head}/votes`
 
 export const get = (path: string): Promise<any | Error> =>
   axios.get(path).then(result => result.data)
@@ -39,11 +39,11 @@ export const postForgeOperations = (server: string) => (
 ): Promise<string | Error> => post(`${server}${forgePath}`, operation)
 
 export const getChainId = (server: string) => (): Promise<string | Error> =>
-  get(`${server}/${chains}/chain_id`)
+  get(`${server}${chains}/chain_id`)
 
 export const getConstants = (server: string) => (): Promise<
   ConstantsObject | Error
-> => get(`${server}/${constantsPath}`)
+> => get(`${server}${constantsPath}`)
 
 export const getBootstrapped = (server: string) => (): Promise<
   BootstrappedObject | Error
@@ -52,78 +52,78 @@ export const getBootstrapped = (server: string) => (): Promise<
 export const getBalance = (server: string) => (
   account: string
 ): Promise<string | Error> =>
-  get(`${server}/${contractsPath}/${account}/balance`)
+  get(`${server}${contractsPath}/${account}/balance`)
 
 export const getDelegate = (server: string) => (
   contractAddress: string
 ): Promise<string | Error> =>
-  get(`${server}/${contractsPath}/${contractAddress}/delegate`)
+  get(`${server}${contractsPath}/${contractAddress}/delegate`)
 
 export const getDelegates = (server: string) => (): Promise<string | Error> =>
-  get(`${server}/${delegatesPath}`)
+  get(`${server}${delegatesPath}`)
 
 export const getHead = (server: string) => (): Promise<HeadObject | Error> =>
-  get(`${server}/${head}`)
+  get(`${server}${head}`)
 
 export const getHeader = (server: string) => (): Promise<object | Error> =>
-  get(`${server}/${header}`)
+  get(`${server}${header}`)
 
 export const getHeadHash = (server: string) => (): Promise<string | Error> =>
-  get(`${server}/${head}/hash`)
+  get(`${server}${head}/hash`)
 
 export const getManagerKey = (server: string) => (
   address: string
 ): Promise<string | null | Error> =>
-  get(`${server}/${contractsPath}/${address}/manager_key`)
+  get(`${server}${contractsPath}/${address}/manager_key`)
 
 export const getCounter = (server: string) => (
   account: string
 ): Promise<string | Error> =>
-  get(`${server}/${contractsPath}/${account}/counter`)
+  get(`${server}${contractsPath}/${account}/counter`)
 
 export const getBaker = (server: string) => (
   tz1Address: string
-): Promise<string | Error> => get(`${server}/${delegatesPath}/${tz1Address}`)
+): Promise<string | Error> => get(`${server}${delegatesPath}/${tz1Address}`)
 
 export const getBallotList = (server: string) => (): Promise<
   Array<object> | Error
-> => get(`${server}/${votesPath}/ballot_list`)
+> => get(`${server}${votesPath}/ballot_list`)
 
 export const getBallots = (server: string) => (): Promise<object | Error> =>
-  get(`${server}/${votesPath}/ballots`)
+  get(`${server}${votesPath}/ballots`)
 
 export const getProposals = (server: string) => (): Promise<
   Array<string> | Error
-> => get(`${server}/${votesPath}/proposals`)
+> => get(`${server}${votesPath}/proposals`)
 
 export const getListings = (server: string) => (): Promise<
   Array<object> | Error
-> => get(`${server}/${votesPath}/listings`)
+> => get(`${server}${votesPath}/listings`)
 
 export const getCurrentProposal = (server: string) => (): Promise<
   string | null | Error
-> => get(`${server}/${votesPath}/current_proposal`)
+> => get(`${server}${votesPath}/current_proposal`)
 
 export const getCurrentPeriod = (server: string) => (): Promise<
   string | Error
-> => get(`${server}/${votesPath}/current_period_kind`)
+> => get(`${server}${votesPath}/current_period_kind`)
 
 export const getCurrentQuorum = (server: string) => (): Promise<
   number | Error
-> => get(`${server}/${votesPath}/current_quorum`)
+> => get(`${server}${votesPath}/current_quorum`)
 
 export const getContract = (server: string) => (
   contractAddress: string
 ): Promise<Contract | Error> =>
   Promise.all([
-    get(`${server}/${contractsPath}/${contractAddress}`),
-    get(`${server}/${contractsPath}/${contractAddress}/entrypoints`)
+    get(`${server}${contractsPath}/${contractAddress}`),
+    get(`${server}${contractsPath}/${contractAddress}/entrypoints`)
   ]).then(result => ({ ...result[0], ...result[1] }))
 
 export const getContractStorage = (server: string) => (
   contractAddress: string
 ): Promise<ContractStorage | Error> =>
-  get(`${server}/${contractsPath}/${contractAddress}/storage`)
+  get(`${server}${contractsPath}/${contractAddress}/storage`)
 
 export const transact = (server: string) => async ({
   from,
@@ -174,7 +174,7 @@ export const transact = (server: string) => async ({
 export const getContractEntrypoints = (server: string) => (
   contractAddress: string
 ): Promise<Contract | Error> =>
-  get(`${server}/${contractsPath}/${contractAddress}/entrypoints`)
+  get(`${server}${contractsPath}/${contractAddress}/entrypoints`)
 
 export const init = (server: string) => ({
   getChainId: getChainId(server),

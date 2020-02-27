@@ -1,6 +1,20 @@
 import axios from 'axios'
 
-import { init, operationPath } from '../network'
+import {
+  init,
+  chains,
+  head,
+  header,
+  helpers,
+  monitorPath,
+  operationPath,
+  simulationPath,
+  forgePath,
+  constantsPath,
+  contractsPath,
+  delegatesPath,
+  votesPath
+} from '../network'
 import {
   forgedOperation,
   transactionParams,
@@ -17,6 +31,23 @@ const net = init(host)
 jest.mock('axios')
 
 describe('network', () => {
+
+  describe('paths', () => {
+    test('should match rpc documentation', () => {
+      expect(chains).toEqual('/chains/main')
+      expect(head).toEqual('/chains/main/blocks/head')
+      expect(header).toEqual('/chains/main/blocks/head/header')
+      expect(helpers).toEqual('/chains/main/blocks/head/helpers')
+      expect(monitorPath).toEqual('/monitor')
+      expect(operationPath).toEqual('/chains/main/blocks/head/helpers/scripts/run_operation')
+      expect(simulationPath).toEqual('/chains/main/blocks/head/helpers/preapply/operations')
+      expect(forgePath).toEqual('/chains/main/blocks/head/helpers/forge/operations')
+      expect(constantsPath).toEqual('/chains/main/blocks/head/context/constants')
+      expect(contractsPath).toEqual('/chains/main/blocks/head/context/contracts')
+      expect(delegatesPath).toEqual('/chains/main/blocks/head/context/delegates')
+      expect(votesPath).toEqual('/chains/main/blocks/head/votes')
+    })
+  })
 
   describe('getBalance', () => {
     test('should get balance for account', async () => {
