@@ -12,3 +12,7 @@ From the client, list know contracts:
 ```
 
 Tezos smart contracts are writen in a programming language called Michelson.
+
+```
+originate contract increment transferring 0 from bootstrap1 running michelson/increment.ligo.tz --init "1" --burn-cap 0.4
+```

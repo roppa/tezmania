@@ -34,7 +34,7 @@ Low level data formats:
 
 ## Forging
 
-Forging basically means converting information into binary, in a structure that is used in peer-to-peer messaging.
+Forging basically means converting information into binary (serialising), in a structure that is used in peer-to-peer messaging.
 
 ## Smart Contracts
 

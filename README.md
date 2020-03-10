@@ -19,33 +19,9 @@ In exported format, the functions below are curried i.e.:
 tezmania.getHead('http://localhost:8732')()
 ```
 
-### getBootstrapped: object
-
-This checks whether the node is bootstrapped if it is well connected to the network i.e. has enough connections to other nodes and the chain is synchronized with them.
-
-### getBalance(account: string): string
-
-Returns balance for account.
-
-### getDelegate(contractAddress: string): string
-
-### getDelegates(): string
-
-### getHead
-
-### getHeadHash
-
 ## Crypto
 
 This library uses [libsodium-wrappers-sumo](https://www.npmjs.com/package/libsodium-wrappers-sumo).
-
-### readPublicKey
-
-### publicKeyFromBuffer
-
-### privateKeyFromBuffer
-
-### getKeysFromMnemonicAndPassphrase
 
 ## Mnemonics
 
@@ -54,10 +30,6 @@ This library uses [bip39](https://github.com/bitcoinjs/bip39).
 ### generateMnemonic [string]: string
 
 This is a direct export from [bip39.generateMnemonic](https://github.com/bitcoinjs/bip39).
-
-### validateMnemonic(string): boolean
-
-This function validates a mnemomic string, returning boolean value.
 
 ## Credits
 
