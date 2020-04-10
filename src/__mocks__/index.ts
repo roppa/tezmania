@@ -48,6 +48,17 @@ export const transactionParams = {
   privateKey: roppaKeystore.privateKey
 }
 
+export const contractTransactionParams = {
+  from: 'tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx',
+  to: 'tz1gjaF81ZRRvdzjobyfVNsAeSC6PScjfQwN',
+  fee: '0',
+  gasLimit: '200',
+  storageLimit: '200',
+  amount: '0',
+  privateKey: roppaKeystore.privateKey,
+  params: {}
+}
+
 export const transactionSource = {
   branch: headHash,
   contents: [

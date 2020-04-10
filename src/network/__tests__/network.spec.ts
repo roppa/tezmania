@@ -18,6 +18,7 @@ import {
 import {
   forgedOperation,
   transactionParams,
+  contractTransactionParams,
   operation,
   headHash,
   transactionResponse,
@@ -414,6 +415,51 @@ describe('network', () => {
         }
       })
     })
+    
+    test('should take optional parameters', async () => {
+
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'edpkuqLhJdGGF4u9qvMqQHgLsA2w4usQTFPYzoasUHpt5kN7sG4ZeT'
+      }))
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: '2'
+      }))
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: {
+          block: headHash,
+          timestamp: '2020-02-13T10:43:12Z'
+        }
+      }))
+      ;(<jest.Mock>axios.get).mockImplementationOnce(async () => ({
+        data: 'chain_id'
+      }))
+      const postResponse = jest.fn(async () => ({
+        data: transactionResponse
+      }))
+      ;(<jest.Mock>axios.post).mockImplementationOnce(postResponse)
+
+      expect(await net.transact(contractTransactionParams))
+        .toEqual(transactionResponse)
+      expect(postResponse).toHaveBeenCalledWith(`${host}${operationPath}`, {
+        chain_id: 'chain_id',
+        operation: {
+          branch: headHash,
+          contents: [{
+            storage_limit: contractTransactionParams.storageLimit,
+            counter: '3',
+            amount: contractTransactionParams.amount,
+            destination: contractTransactionParams.to,
+            fee: contractTransactionParams.fee,
+            gas_limit: contractTransactionParams.gasLimit,
+            kind: 'transaction',
+            source: contractTransactionParams.from
+          }],
+          signature: 'edsigthZPR5SHM8t3W8g74VVNmECkvD729oP7J2kN23zKHzthFKMA22sX81NP7r8eFEZYd7Xigof6HuvTZ8CFyQGZ4F4vDyaCJg'
+        }, {
+          headers : { 'Content-Type': 'application/json' }
+        }
+      })
+    }) 
   })
 
   describe('getContractEntrypoints', () => {

@@ -132,7 +132,8 @@ export const transact = (server: string) => async ({
   fee,
   gasLimit,
   storageLimit,
-  privateKey
+  privateKey,
+  parameters
 }: Transaction): Promise<object | Error> => {
   const managerKey = await getManagerKey(server)(from)
   if (!managerKey) {
