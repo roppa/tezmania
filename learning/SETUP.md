@@ -3,7 +3,7 @@
 ## Networks
 
 - alphanet
-- babylonnet
+- carthagenet
 - mainnet
 
 ## Setting up
@@ -13,7 +13,7 @@ To get Tezos I found the only way was to use Docker. The installation was riddle
 Once you have downloaded and converted the .sh files to executable, start all processes with (and make sure port 8732 is exposed and cors are set in order to run examples in docker):
 
 ```
-./babylonnet.sh start --rpc-port 8732 --cors-origin=http://localhost:8000 --cors-origin=node:8732 --cors-origin=localhost:8732
+./carthagenet.sh start --rpc-port 8732 --cors-origin=http://localhost:8000 --cors-origin=node:8732 --cors-origin=localhost:8732
 ```
 
 Add `--help` for more informations about the script.
@@ -21,13 +21,13 @@ Add `--help` for more informations about the script.
 Every command to the tezos-client can be equivalently executed using:
 
 ```sh
-./babylonnet.sh client [command]
+./carthagenet.sh client [command]
 ```
 
 Similary, tezos-admin-client can be executed using:
 
 ```sh
-./babylonnet.sh admin-client [command]
+./carthagenet.sh admin-client [command]
 ```
 
 With the files above, you can use:
@@ -40,13 +40,13 @@ With the files above, you can use:
 For example:
 
 ```sh
-./babylonnet.sh node status
+./carthagenet.sh node status
 ```
 
 or
 
 ```sh
-./babylonnet.sh client man -v 3
+./carthagenet.sh client man -v 3
 ```
 
 ## Tezos accounts
@@ -54,13 +54,19 @@ or
 Once you have the network running, and it has synced (can take a few days), you can start doing something interesting. First you want an account that has tez, for this we can [use a faucet](https://faucet.tzalpha.net/). Download and save as a json file. Name it whatever you want, then run:
 
 ```bash
-./babylonnet.sh client activate account yourname with "container:yourname.json"
+./carthagenet.sh client activate account yourname with "container:yourname.json"
+```
+
+If you have problems with the above, try using `/tmp/yourname.json`:
+
+```bash
+./carthagenet.sh client activate account yourname with /tmp/yourname.json
 ```
 
 Then to verify run:
 
 ```bash
-./babylonnet.sh client get balance for yourname
+./carthagenet.sh client get balance for yourname
 ```
 
 For example, the one I use looks like this:
@@ -95,7 +101,7 @@ For example, the one I use looks like this:
 You can get more information about your account by running:
 
 ```bash
-./babylonnet.sh client show address yourname -S
+./carthagenet.sh client show address yourname -S
 ```
 
 In my case we get this:

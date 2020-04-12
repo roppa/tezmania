@@ -8,7 +8,7 @@ We have seen our tezos addresses for users; they begin with 'tz1'. This is an im
 To see what contracts we have run:
 
 ```
-./babylonnet.sh client list known contracts
+./carthagenet.sh client list known contracts
 ```
 
 ## Developing
@@ -18,17 +18,17 @@ Tezos smart contracts are writen in a programming language called Michelson. Thi
 The example the documentation has for deploying a contract is:
 
 ```
-./babylonnet.sh  originate contract <new> transferring <qty> from <src> running <prg> [--fee <amount>]
+./carthagenet.sh  originate contract <new> transferring <qty> from <src> running <prg> [--fee <amount>]
 ```
 
 So for the example on the documentation it would look something like:
 
 ```
-./babylonnet.sh client originate contract increment transferring 0 from bootstrap1 running michelson/increment.ligo.tz --init "1" --burn-cap 0.4
+./carthagenet.sh client originate contract increment transferring 0 from bootstrap1 running michelson/increment.ligo.tz --init "1" --burn-cap 0.4
 ```
 
 And another contract using Docker:
 
 ```
-./babylonnet.sh client originate contract tezart transferring 0 from tz1ipQzB7tXwafCZn9hJBsJLqrAHWKjK6FNd running "container:contract.txt" --dry-run
+./carthagenet.sh client originate contract tezart transferring 0 from tz1ipQzB7tXwafCZn9hJBsJLqrAHWKjK6FNd running "container:contract.txt" --dry-run
 ```

@@ -38,15 +38,7 @@ Forging basically means converting information into binary (serialising), in a s
 
 ## Smart Contracts
 
-[Smart contracts](./SMART-CONTRACTS.md)
-
-List all contracts:
-
-```
-./babylonnet.sh client list known contracts
-```
-
-## Michelson, OCaml, Liquidity and Fi
+- [Smart contracts](./SMART-CONTRACTS.md)
 
 ## Baking
 

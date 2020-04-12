@@ -25,7 +25,7 @@ From the above type, we need to:
 Once you have an account with tez, you can start transferring. First, lets do a 'dry run' to make sure we don't make any mistakes:
 
 ```bash
-./babylonnet.sh client transfer 400 from roppa to alice --dry-run
+./carthagenet.sh client transfer 400 from roppa to alice --dry-run
 ```
 
 You should see something like this:
@@ -60,7 +60,7 @@ Simulation result:
 Lets run this again but log out all the steps invovled using the `-l` flag:
 
 ```bash
-./babylonnet.sh client -l transfer 400 from roppa to alice --dry-run
+./carthagenet.sh client -l transfer 400 from roppa to alice --dry-run
 ```
 
 Now we see much more information:
