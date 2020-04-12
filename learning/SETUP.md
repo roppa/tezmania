@@ -63,6 +63,13 @@ If you have problems with the above, try using `/tmp/yourname.json`:
 ./carthagenet.sh client activate account yourname with /tmp/yourname.json
 ```
 
+The above worked for one file but strangely not others. Yet another work around is to copy the file into docker:
+
+```bash
+docker cp yourname.json carthagenet_node_1:/home/tezos/yourname.json
+./carthagenet.sh client activate account yourname with yourname.json
+```
+
 Then to verify run:
 
 ```bash
