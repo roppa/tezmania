@@ -18,7 +18,7 @@ Tezos smart contracts are writen in a programming language called Michelson. Thi
 The example the documentation has for deploying a contract is:
 
 ```
-./carthagenet.sh  originate contract <new> transferring <qty> from <src> running <prg> [--fee <amount>]
+./carthagenet.sh originate contract <new> transferring <qty> from <src> running <prg> [--fee <amount>]
 ```
 
 So for the example on the documentation it would look something like:

@@ -9,7 +9,7 @@ const prefix = {
   edsk: new Uint8Array([43, 246, 78, 7]),
   edsk2: new Uint8Array([13, 15, 58, 7]),
   edsig: new Uint8Array([9, 245, 205, 134, 18]),
-  sig: new Uint8Array([4, 130, 43])
+  sig: new Uint8Array([4, 130, 43]),
 }
 
 const mergeBuffer = (
@@ -47,7 +47,7 @@ const getKeyStore = async (seed: Buffer): Promise<RawKeyStore> => {
 
 export const generateKeysFromMnemonicAndPassphrase = async ({
   mnemonic,
-  passphrase
+  passphrase,
 }: MnemonicPassword): Promise<KeyStore> => {
   isValidMnemonic(mnemonic)
   const { publicKey, privateKey, keyType } = await getKeyStore(
@@ -59,7 +59,7 @@ export const generateKeysFromMnemonicAndPassphrase = async ({
     privateKey: b58encode(prefix.edsk, privateKey),
     pkh: b58encode(prefix.tz1, sodium.crypto_generichash(20, publicKey)),
     keyType,
-    mnemonic
+    mnemonic,
   }
 }
 
@@ -69,7 +69,7 @@ export const bufferToHex = (buffer: Buffer | Uint8Array): string =>
     .join('')
 
 export const hexToBuffer = (hex: string) =>
-  new Uint8Array(hex.match(/.{2}/g)!.map(byte => parseInt(byte, 16)))
+  new Uint8Array(hex.match(/.{2}/g)!.map((byte) => parseInt(byte, 16)))
 
 export const extractKeysFromSecret = (secret: string) => ({
   publicKey: b58encode(prefix.edpk, b58decode(prefix.edsk, secret).slice(32)),
@@ -77,7 +77,7 @@ export const extractKeysFromSecret = (secret: string) => ({
   pkh: b58encode(
     prefix.tz1,
     sodium.crypto_generichash(20, b58decode(prefix.edsk, secret).slice(32))
-  )
+  ),
 })
 
 // stolen from https://github.com/TezTech/eztz/blob/master/src/main.js
@@ -96,14 +96,14 @@ export const sign = async ({ message, privateKey, watermark }: SignObject) => {
     bytes: message,
     sig,
     edsig: b58encode(prefix.edsig, sig),
-    sbytes: message + bufferToHex(sig)
+    sbytes: message + bufferToHex(sig),
   }
 }
 
 export const verify = ({
   signature,
   message,
-  publicKey
+  publicKey,
 }: VerifyObject): boolean =>
   sodium.crypto_sign_verify_detached(
     signature,
@@ -132,10 +132,7 @@ const zarith = (num: string): string => {
 }
 
 const sliceDecodeHash = (slice: number) => (hash: string): string =>
-  bs58check
-    .decode(hash)
-    .slice(slice)
-    .toString('hex')
+  bs58check.decode(hash).slice(slice).toString('hex')
 
 export const forgeAddress = (address: string): string =>
   `0000${sliceDecodeHash(3)(address)}`
@@ -149,12 +146,11 @@ export const forgeOperation = ({
   gas_limit,
   storage_limit,
   amount,
-  destination
-}: Operation): string => {
-  return `08${forgeAddress(source)}${zarith(fee)}${zarith(counter)}${zarith(
+  destination,
+}: Operation): string =>
+  `08${forgeAddress(source)}${zarith(fee)}${zarith(counter)}${zarith(
     gas_limit
   )}${zarith(storage_limit)}${zarith(amount)}${forgeAddress(destination)}00`
-}
 
 export const forge = (source: OperationMessage) =>
   source.contents.reduce(
