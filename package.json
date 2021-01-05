@@ -6,7 +6,7 @@
   "dependencies": {
     "@types/bs58": "4.0.1",
     "@types/libsodium-wrappers-sumo": "0.7.3",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "bip39": "3.0.2",
     "bs58check": "2.1.2",
     "libsodium-wrappers-sumo": "0.7.6"
